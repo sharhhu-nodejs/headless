@@ -1,0 +1,112 @@
+{
+	"url": "http://www.baidu.com",
+	"trace": true,
+	"console": true,
+	"error": true,
+	"load": true,
+	"pageerror": true,
+	"request": true,
+	"requestfailed": true,
+	"requestfinished": true,
+	"response": true,
+	"actions":[
+		{
+			"name": "page",
+			"actions":[
+				{
+					"name": "press",
+					"actions": [{
+						"text": "123",
+						"delay": 100
+					}]
+				},
+				{
+					"name": "keyboard",
+					"actions": [{
+						"name": "down",
+						"arguments": ["a", "b"]
+					},{
+						"name": "up",
+						"arguments": ["a", "b"]
+					},{
+						"name": "sendCharacter",
+						"arguments": ["a", "b"]
+					}]
+				},
+				{
+					"name": "mouse",
+					"actions": [{
+						"name": "click",
+						"arguments": [1, 100, {
+							"button": "left|right|middle",
+							"clickCount": 1,
+							"delay": 2
+						}]
+					},{
+						"name": "up",
+						"arguments": [1, 100, {
+							"button": "left|right|middle",
+							"clickCount": 1,
+						}]
+					},{
+						"name": "move",
+						"arguments": [1, 100, {
+							"steps ": 5
+						}]
+					},{
+						"name": "down",
+						"arguments": [1, 100, {
+							"steps ": 5
+						}]
+					}]
+				},
+				{
+					"name": "touchscreen",
+					"actions": [{
+						"name": "tap",
+						"arguments": [1, 2]
+					}]
+				}
+			]
+		},
+		{
+			"name": "element",
+			"selector": "[input]",
+			"actions": [{
+				"name": "click",
+				"arguments": {
+					"button": "middle",
+					"clickCount": 1,
+					"delay": 100 
+				}
+			},{
+				"name": "dispose",
+				"arguments": {}
+			},{
+				"name": "hover",
+				"arguments": {}
+			},{
+				"name": "tap",
+				"arguments": {}
+			},{
+				"name": "uploadFile",
+				"arguments": {
+					"filePaths": "fileName"
+				}
+			}]
+		}
+	],
+	"waitForNavigation":{
+		"timeout": 100,
+		"waitUntil": "load",
+		"networkIdleTimeout": 200
+	},
+	"waitForSelector": {
+		"selector": "img",
+		"arguments": {
+			"visible": false,
+			"timeout": 30000
+		}
+	},
+
+}
