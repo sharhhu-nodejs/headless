@@ -1,5 +1,5 @@
 {
-	"url": "http://www.baidu.com",
+	"url": "https://www.baidu.com",
 	"trace": true,
 	"console": true,
 	"error": true,
@@ -38,14 +38,14 @@
 					"actions": [{
 						"name": "click",
 						"arguments": [1, 100, {
-							"button": "left|right|middle",
+							"button": "middle",
 							"clickCount": 1,
 							"delay": 2
 						}]
 					},{
 						"name": "up",
 						"arguments": [1, 100, {
-							"button": "left|right|middle",
+							"button": "middle",
 							"clickCount": 1,
 						}]
 					},{
@@ -71,28 +71,27 @@
 		},
 		{
 			"name": "element",
-			"selector": "[input]",
-			"actions": [{
-				"name": "click",
-				"arguments": {
-					"button": "middle",
-					"clickCount": 1,
-					"delay": 100 
-				}
-			},{
-				"name": "dispose",
-				"arguments": {}
-			},{
-				"name": "hover",
-				"arguments": {}
-			},{
-				"name": "tap",
-				"arguments": {}
-			},{
-				"name": "uploadFile",
-				"arguments": {
-					"filePaths": "fileName"
-				}
+			"selectors":[{
+				"selector": "[input]",
+				"actions": [
+					{
+						"name": "click",
+						"arguments": {
+							"button": "middle",
+							"clickCount": 1,
+							"delay": 100
+						}
+					},{
+						"name": "dispose",
+						"arguments": {}
+					},{
+						"name": "hover",
+						"arguments": {}
+					},{
+						"name": "tap",
+						"arguments": {}
+					}
+				]
 			}]
 		}
 	],
@@ -107,6 +106,6 @@
 			"visible": false,
 			"timeout": 30000
 		}
-	},
+	}
 
 }

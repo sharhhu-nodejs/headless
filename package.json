@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "koa": "^2.3.0",
-    "koa-router": "^7.2.1"
+    "koa-router": "^7.2.1",
+    "log4js": "^2.3.3",
+    "puppeteer": "^0.10.2"
   }
 }
