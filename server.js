@@ -1,6 +1,7 @@
 const Koa = require('koa');
 const router = require('koa-router')();
 const app = new Koa();
+const path = require('path');
 
 const fs = require('fs');
 const headless = require('./headless.js');
@@ -8,36 +9,18 @@ const headless = require('./headless.js');
 var PageAction = require('./pageActions.js');
 var ElementAction = require('./elementActions.js');
 
+const Log = require('log');
 
-const log4js = require('log4js');
-log4js.configure({
-  appenders: {
-  	console: { type: 'file', filename: './logs/puppeteer-console.log' },
-  	error: { type: 'file', filename: './logs/puppeteer-error.log' },
-  	request: { type: 'file', filename: './logs/puppeteer-request.log' },
-  	pageerror: { type: 'file', filename: './logs/puppeteer-pageerror.log' },
-  	requestfailed: { type: 'file', filename: './logs/puppeteer-requestfailed.log' },
-  	requestfinished: { type: 'file', filename: './logs/puppeteer-requestfinished.log' },
-  	response: { type: 'file', filename: './logs/puppeteer-response.log' }
-  },
-  categories: { default: { appenders: [
-  		"console",
-		"error",
-		"request",
-		"pageerror",
-		"requestfailed",
-		"requestfinished",
-		"response"
-  	], level: 'trace' } }
-});
+const LOG_DIR = 'logs';
 
-const consoleLogger = log4js.getLogger('console');
-const errorLogger = log4js.getLogger('error');
-const requestLogger = log4js.getLogger('request');
-const pageerrorLogger = log4js.getLogger('pageerror');
-const requestfailedLogger = log4js.getLogger('requestfailed');
-const requestfinishedLogger = log4js.getLogger('requestfinished');
-const responseLogger = log4js.getLogger('response');
+let autoName = 1;
+
+const Logger = require('./logger.js');
+
+
+const koaStatic = require('koa-static');
+
+app.use(koaStatic('public/'));
 
 router.get('/', async (ctx, next)=>{
 	var {page} = await headless.then();
@@ -61,11 +44,22 @@ router.get('/test', async (ctx, next)=>{
 
 
 router.all('/json', async (ctx)=>{
-	ctx.body = '/json';
+	
 	console.log('headless start');
-	var {page} = await headless.then();
+
+	const {browser} = await headless.then();
+	// get json
 	const mjson = require('./test.js');
-	// logger.trace('Entering cheese testing');
+	
+	// get new Page
+	const page = await browser.newPage();
+
+	let resJson = {
+		steps: [],
+		trace: `trace-${Date.now()}.json`
+	};
+	resJson.logFile = `/logs/${autoName++}-${mjson.name}-${Date.now()}.log`;
+	var logger = new Logger(path.resolve(__dirname, '/public', resJson.logFile));
 
 	// if(mjson.waitForNavigation){
 	// 	console.log('headless start waitForNavigation');
@@ -77,7 +71,7 @@ router.all('/json', async (ctx)=>{
 	// }
 	if(mjson.trace){
 		console.log('tracing.start');
-		await page.tracing.start({path: 'json.json', screenshots: true});
+		await page.tracing.start({path: path.resolve(__dirname, '/public', resJson.trace), screenshots: true});
 	}
 	if(mjson.console){
 		console.log('console listener');
@@ -94,35 +88,35 @@ router.all('/json', async (ctx)=>{
 		console.log('error listener');
 		page.on('error', function(args){
 			console.log('error event');
-			errorLogger.trace(...args);
+			logger.trace(...args);
 		})
 	}
 	if(mjson.request){
 		console.log('request listener');
 		page.on('request', function(request){
 			console.log('request event');
-			requestLogger.trace(`[${request.url}] [${request.resourceType}] [${request.method}] [${JSON.stringify(request.headers)}]`);
+			logger.trace(`[${request.url}] [${request.resourceType}] [${request.method}] [${JSON.stringify(request.headers)}]`);
 		});
 	}
 	if(mjson.requestfailed){
 		console.log('requestfailed listener');
 		page.on('requestfailed', function(request){
 			console.log('requestfailed event');
-			requestfailedLogger.trace(`[${request.url}] [${request.resourceType}] [${request.method}] [${JSON.stringify(request.headers)}]`);
+			logger.trace(`[${request.url}] [${request.resourceType}] [${request.method}] [${JSON.stringify(request.headers)}]`);
 		})
 	}
 	if(mjson.requestfinished){
 		console.log('requestfinished listener');
 		page.on('requestfinished', function(request){
 			console.log('requestfinished event');
-			requestfinishedLogger.trace(`[${request.url}] [${request.resourceType}] [${request.method}] [${JSON.stringify(request.headers)}]`);
+			logger.trace(`[${request.url}] [${request.resourceType}] [${request.method}] [${JSON.stringify(request.headers)}]`);
 		})
 	}
 	if(mjson.response){
 		console.log('response listener');
 		page.on('response', async function(response){
 			console.log('response event');
-			responseLogger.trace(`[${response.url}] [${response.status}] [${response.ok}] [${JSON.stringify(response.headers)}]`);
+			logger.trace(`[${response.url}] [${response.status}] [${response.ok}] [${JSON.stringify(response.headers)}]`);
 		})
 	}
 	console.time('loadingPage');
@@ -132,32 +126,49 @@ router.all('/json', async (ctx)=>{
 		console.log('load event');
 	})
 	await page.goto(mjson.url);
-	await page.screenshot({path: `./screenshots/page-beforeDoAction-${Date.now()}.png`});
+	var beforePath = `./screenshots/page-beforeDoAction-${Date.now()}.png`;
+	resJson.steps.push({
+		actionName: 'page.DoAction.before',
+		args: {},
+		screenshotName: beforePath
+	});
+	await page.screenshot({path: path.resolve(__dirname, '/public', beforePath)});
 	if(mjson.actions){
-		console.log('mjson.actions');
+		console.log('mjson.actions start');
 		for(let action of mjson.actions){
 			switch(action.name){
 				case 'page':
 					console.log('mjson.actions: page');
 					var pageAction = new PageAction(action, page);
+					pageAction.init();
+					resJson.steps = resJson.steps.concat(pageAction.getSteps);
 					break;
 				case 'element':
 					console.log('mjson.actions: element');
 					var elementAction = new ElementAction(action, page);
 					elementAction.init();
+					resJson.steps = resJson.steps.concat(elementAction.getSteps);
 					break;
 				default:
 					break;
 			}
 		}
+		console.log('mjson.actions end');
 	}
-	await page.screenshot({path: `./screenshots/page-afterDoAction-${Date.now()}.png`});
+	var afterPath = `./screenshots/page-afterDoAction-${Date.now()}.png`;
+	await page.screenshot({path: path.resolve(__dirname, '/public', afterPath)});
+	resJson.steps.push({
+		actionName: 'page.DoAction.after',
+		args: {},
+		screenshotName: afterPath
+	})
 	if(mjson.trace){
 		page.tracing.stop();
 	}
+	await page.close();
 
-	console.log(ctx.body);
-	console.log('screen shot');
+	ctx.body = resJson;
+
 })
 app.use(router.routes());
 app.listen(9999);
