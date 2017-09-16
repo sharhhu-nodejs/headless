@@ -2,15 +2,13 @@
 * @Author: Administrator
 * @Date:   2017-09-10 20:46:11
 * @Last Modified by:   Administrator
-* @Last Modified time: 2017-09-10 23:06:07
+* @Last Modified time: 2017-09-12 21:07:42
 */
 
 class PageAction {
 	constructor(action, page) {
 		this.action = action;
 		this.page = page;
-
-		this.init();
 	}
 	sleep(timeout){
 		var promise = new Promise((resolve, reject) => {
@@ -35,6 +33,15 @@ class PageAction {
 			await this.page.screenshot({path: `./screenshots/press-start-${Date.now()}.png`});
 			await this.page.press(action);
 			await this.page.screenshot({path: `./screenshots/press-end-${Date.now()}.png`});
+		}
+	}
+	async doClick(actions){
+		for(let action of actions){
+			console.log(`do page action: click`);
+			await this.page.screenshot({path: `./screenshots/page-click-start-${Date.now()}.png`});
+			await this.page.click(action.selector);
+			await this.sleep(10000);
+			await this.page.screenshot({path: `./screenshots/page-click-end-${Date.now()}.png`});
 		}
 	}
 	async doKeyboard(actions){
@@ -82,6 +89,10 @@ class PageAction {
 				case 'mouse':
 					console.log(`do page action: mouse`);
 					this.doMouse(action.actions);
+					break;
+				case 'click':
+					console.log(`do page action: mouse`);
+					this.doClick(action.actions);
 					break;
 				case 'touchscreen':
 					console.log(`do page action: touchscreen`);

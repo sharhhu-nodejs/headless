@@ -77,7 +77,7 @@ router.all('/json', async (ctx)=>{
 	// }
 	if(mjson.trace){
 		console.log('tracing.start');
-		await page.tracing.start({path: 'json.json', screenshots: true});
+		await page.tracing.start({path: 'trace.json', screenshots: true});
 	}
 	if(mjson.console){
 		console.log('console listener');
@@ -131,8 +131,19 @@ router.all('/json', async (ctx)=>{
 		console.timeEnd('loadingPage');
 		console.log('load event');
 	})
-	await page.goto(mjson.url);
+	await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36");
+	await page.setViewport({
+		width: 1920,
+		height: 1080
+	});
+	await page.goto(mjson.url, mjson.waitForNavigation);
+	console.log('page-beforeDoAction')
 	await page.screenshot({path: `./screenshots/page-beforeDoAction-${Date.now()}.png`});
+	console.log(await page.evaluate('navigator.userAgent'));
+
+
+
+
 	if(mjson.actions){
 		console.log('mjson.actions');
 		for(let action of mjson.actions){
@@ -140,18 +151,25 @@ router.all('/json', async (ctx)=>{
 				case 'page':
 					console.log('mjson.actions: page');
 					var pageAction = new PageAction(action, page);
+					await pageAction.init();
 					break;
 				case 'element':
 					console.log('mjson.actions: element');
 					var elementAction = new ElementAction(action, page);
-					elementAction.init();
+					await elementAction.init();
 					break;
 				default:
 					break;
 			}
 		}
 	}
+	console.log('page-afterDoAction')
 	await page.screenshot({path: `./screenshots/page-afterDoAction-${Date.now()}.png`});
+	console.log(await page.evaluate(`$('#su').click();`));
+	await page.evaluate(`
+		$('.c-container a[data-click][target="_blank"]')[0].click();
+	`)
+	await page.screenshot({path: `./screenshots/page-jquery-${Date.now()}.png`});
 	if(mjson.trace){
 		page.tracing.stop();
 	}

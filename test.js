@@ -2,7 +2,7 @@
 * @Author: Administrator
 * @Date:   2017-09-10 22:02:23
 * @Last Modified by:   Administrator
-* @Last Modified time: 2017-09-10 23:02:34
+* @Last Modified time: 2017-09-12 21:03:15
 */
 module.exports = {
 	"url": "https://www.baidu.com",
@@ -47,8 +47,14 @@ module.exports = {
 				{
 					"name": "type",
 					"actions": [{
-						"text": "123",
-						"delay": 100
+						"text": "123333333333",
+						// "delay": 100
+					}]
+				},
+				{
+					"name": "click",
+					"actions": [{
+						"selector": "#su"
 					}]
 				},
 				// {
@@ -116,8 +122,8 @@ module.exports = {
 						"name": "click",
 						"arguments": {
 							"button": "middle",
-							"clickCount": 20,
-							"delay": 100
+							"clickCount": 1,
+							// "delay": 100
 						}
 					}
 				]

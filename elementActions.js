@@ -2,7 +2,7 @@
 * @Author: Administrator
 * @Date:   2017-09-10 20:59:17
 * @Last Modified by:   Administrator
-* @Last Modified time: 2017-09-10 23:06:13
+* @Last Modified time: 2017-09-12 20:59:08
 */
 class ElementActions {
 	constructor(action, page) {
@@ -17,10 +17,13 @@ class ElementActions {
 			let elements = await this.page.$$(selector.selector);
 			for(let action of selector.actions){
 				for(let el of elements){
+					console.log(el.id, el.classList);
 					console.log(`do element action: ${action.name}`);
 					await this.page.screenshot({path: `./screenshots/${action.name}-start-${Date.now()}.png`});
+					console.log(el);
 					await el[action.name](action.arguments);
-					await this.sleep(1000);
+					await el.dispose();
+					await this.sleep(10000);
 					await this.page.screenshot({path: `./screenshots/${action.name}-end-${Date.now()}.png`});
 				}
 			}
