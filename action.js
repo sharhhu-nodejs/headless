@@ -17,3 +17,5 @@ class Action {
 	}
 	// methods
 }
+
+module.exports = Action;

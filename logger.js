@@ -6,7 +6,7 @@ class Logger {
 		this.logTag = 'default';
 	}
 	async log(msg){
-		fs.appendFile(this.fileName, `[${moment(new Date()).format('YYYY-MM-DD HH:mm:ss')}] ${msg}\t\n\r`);
+		fs.appendFile(this.fileName, `[${moment(new Date()).format('YYYY-MM-DD HH:mm:ss')}] ${msg}\t\n\r`, ()=>{});
 	}
 	async trace(msg){
 		this.log(`[trace] ${this.logTag} - ${msg}`);

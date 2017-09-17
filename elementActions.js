@@ -2,10 +2,11 @@
 * @Author: Administrator
 * @Date:   2017-09-10 20:59:17
 * @Last Modified by:   Administrator
-* @Last Modified time: 2017-09-10 23:06:13
+* @Last Modified time: 2017-09-17 01:40:56
 */
 
 const Action = require('./action.js');
+const path = require('path');
 class ElementActions extends Action {
 	constructor(action, page, screenshotRoot) {
 		super();
@@ -13,16 +14,20 @@ class ElementActions extends Action {
 		this.page = page;
 		this.screenshotRoot = screenshotRoot;
 		this.steps = [];
-		this.actionSleepTime = 500;
+		this.actionSleepTime = 1000;
 	}
 
-	async doScreenshot(actionName, screenshotName, args){
+	async doScreenshot(actionName, screenshotName, args, selector){
 		this.steps.push({
 			actionName: actionName,
 			args: args,
+			selector: selector,
 			screenshotName: screenshotName
 		});
-		await this.page.screenshot({path: path.join(this.screenshotRoot, screenshotName)});
+		await this.page.screenshot({
+			fullPage: true,
+			path: path.join(this.screenshotRoot, screenshotName)
+	});
 	}
 
 	async init(){
@@ -33,10 +38,10 @@ class ElementActions extends Action {
 			for(let action of selector.actions){
 				for(let el of elements){
 					console.log(`do element action: ${action.name}`);
-					await this.doScreenshot(`element.${action.name}.before`, `./screenshots/${action.name}-before-${Date.now()}.png`, action.arguments);
+					await this.doScreenshot(`element.${action.name}.before`, `screenshots/${action.name}-before-${Date.now()}.png`, action.arguments, selector);
 					await el[action.name](action.arguments);
-					await this.doScreenshot(`element.${action.name}.after`, `./screenshots/${action.name}-after-${Date.now()}.png`, action.arguments);
-					await this.sleep(1000);
+					await this.doScreenshot(`element.${action.name}.after`, `screenshots/${action.name}-after-${Date.now()}.png`, action.arguments, selector);
+					await this.sleep(this.actionSleepTime);
 				}
 			}
 		}

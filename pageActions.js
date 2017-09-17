@@ -2,7 +2,7 @@
 * @Author: Administrator
 * @Date:   2017-09-10 20:46:11
 * @Last Modified by:   Administrator
-* @Last Modified time: 2017-09-10 23:06:07
+* @Last Modified time: 2017-09-17 01:40:45
 */
 const Action = require('./action.js');
 
@@ -15,17 +15,21 @@ class PageAction extends Action {
 		this.page = page;
 		this.steps = [];
 		this.screenshotRoot = screenshotRoot;
-		this.actionSleepTime = 500;
+		this.actionSleepTime = 1000;
 	}
 
-	async doScreenshot(actionName, screenshotName, args){
+	async doScreenshot(actionName, screenshotName, args, selector){
 
 		this.steps.push({
 			actionName: actionName,
 			args: args,
+			selector: selector,
 			screenshotName: screenshotName
 		});
-		await this.page.screenshot({path: path.join(this.screenshotRoot, screenshotName)});
+		await this.page.screenshot({
+			fullPage: true,
+			path: path.join(this.screenshotRoot, screenshotName)
+	});
 	}
 
 	async doClick(actions){
@@ -35,9 +39,9 @@ class PageAction extends Action {
 			if(action.delay){
 				arg.delay = action.delay;
 			}
-			await this.doScreenshot('page.click.before', `./screenshots/click-start-${Date.now()}.png`, arg);
+			await this.doScreenshot('page.click.before', `screenshots/click-start-${Date.now()}.png`, arg, action.selector);
 			await this.page.click(action.selector, arg);
-			await this.doScreenshot('page.click.after', `./screenshots/click-after-${Date.now()}.png`, arg);
+			await this.doScreenshot('page.click.after', `screenshots/click-after-${Date.now()}.png`, arg, action.selector);
 			await this.sleep(this.actionSleepTime);
 		}
 	}
@@ -49,18 +53,18 @@ class PageAction extends Action {
 			if(action.delay){
 				arg.delay = action.delay;
 			}
-			await this.doScreenshot('page.type.before', `./screenshots/type-start-${Date.now()}.png`, arg);
+			await this.doScreenshot('page.type.before', `screenshots/type-start-${Date.now()}.png`, arg);
 			await this.page.type(action.text, arg);
-			await this.doScreenshot('page.type.after', `./screenshots/type-after-${Date.now()}.png`, arg);
+			await this.doScreenshot('page.type.after', `screenshots/type-after-${Date.now()}.png`, arg);
 			await this.sleep(this.actionSleepTime);
 		}
 	}
 	async doPress(actions){
 		for(let action of actions){
 			console.log(`do page action: press`);
-			await this.doScreenshot('page.press.before', `./screenshots/press-before-${Date.now()}.png`, {});
+			await this.doScreenshot('page.press.before', `screenshots/press-before-${Date.now()}.png`, {});
 			await this.page.press(action);
-			await this.doScreenshot('page.press.after', `./screenshots/press-after-${Date.now()}.png`, {});
+			await this.doScreenshot('page.press.after', `screenshots/press-after-${Date.now()}.png`, {});
 			await this.sleep(this.actionSleepTime);
 		}
 	}
@@ -68,9 +72,9 @@ class PageAction extends Action {
 		for(let action of actions){
 			for(let arg of action.arguments){
 				console.log(`do page action: keyboard-${action.name}`);
-				await this.doScreenshot(`page.keyboard.${action.name}.before`, `./screenshots/keyboard-before-${Date.now()}.png`, arg);
+				await this.doScreenshot(`page.keyboard.${action.name}.before`, `screenshots/keyboard-before-${Date.now()}.png`, arg);
 				await this.page.keyboard[action.name](arg);
-				await this.doScreenshot(`page.keyboard.${action.name}.after`, `./screenshots/keyboard-after-${Date.now()}.png`, arg);
+				await this.doScreenshot(`page.keyboard.${action.name}.after`, `screenshots/keyboard-after-${Date.now()}.png`, arg);
 				await this.sleep(this.actionSleepTime);
 			}
 		}
@@ -78,10 +82,10 @@ class PageAction extends Action {
 	async doMouse(actions){
 		for(let action of actions){
 			console.log(`do page action: mouse-${action.name}`);
-			await this.doScreenshot(`page.mouse.${action.name}.before`, `./screenshots/mouse-before-${Date.now()}.png`, action.arguments);
+			await this.doScreenshot(`page.mouse.${action.name}.before`, `screenshots/mouse-before-${Date.now()}.png`, action.arguments);
 			await this.page.mouse[action.name](...action.arguments);
 
-			await this.doScreenshot(`page.mouse.${action.name}.after`, `./screenshots/mouse-after-${Date.now()}.png`, action.arguments);
+			await this.doScreenshot(`page.mouse.${action.name}.after`, `screenshots/mouse-after-${Date.now()}.png`, action.arguments);
 			await this.sleep(this.actionSleepTime);
 		}
 	}
@@ -89,9 +93,9 @@ class PageAction extends Action {
 	async doTouchscreen(actions){
 		for(let action of actions){
 			console.log(`do page action: touchscreen-${action.name}`);
-			await this.doScreenshot(`page.touchscreen.${action.name}.before`, `./screenshots/touchscreen-before-${Date.now()}.png`, action.arguments);
+			await this.doScreenshot(`page.touchscreen.${action.name}.before`, `screenshots/touchscreen-before-${Date.now()}.png`, action.arguments);
 			await this.page.touchscreen[action.name](...action.arguments);
-			await this.doScreenshot(`page.touchscreen.${action.name}.after`, `./screenshots/touchscreen-after-${Date.now()}.png`, action.arguments);
+			await this.doScreenshot(`page.touchscreen.${action.name}.after`, `screenshots/touchscreen-after-${Date.now()}.png`, action.arguments);
 			await this.sleep(this.actionSleepTime);
 		}
 	}
@@ -100,27 +104,27 @@ class PageAction extends Action {
 			switch(action.name){
 				case 'type':
 					console.log(`do page action: type`);
-					this.doType(action.actions);
+					await this.doType(action.actions);
 					break;
 				case 'press':
 					console.log(`do page action: press`);
-					this.doPress(action.actions);
+					await this.doPress(action.actions);
 					break;
 				case 'keyboard':
 					console.log(`do page action: keyboard`);
-					this.doKeyboard(action.actions);
+					await this.doKeyboard(action.actions);
 					break;
 				case 'click':
 					console.log(`do page action: click`);
-					this.doClick(action.actions);
+					await this.doClick(action.actions);
 					break;
 				case 'mouse':
 					console.log(`do page action: mouse`);
-					this.doMouse(action.actions);
+					await this.doMouse(action.actions);
 					break;
 				case 'touchscreen':
 					console.log(`do page action: touchscreen`);
-					this.doTouchscreen(action.actions);
+					await this.doTouchscreen(action.actions);
 					break;
 			}
 		}

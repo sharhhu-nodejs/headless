@@ -1,12 +1,25 @@
 const puppeteer = require('puppeteer');
+const path = require('path');
 
-module.exports = (async function(){
-	const browser = await puppeteer.launch({headless: false});
-	const page = await browser.newPage();
-	page.injectFile('./libs/jquery.js');
-	console.log('init exports');
-	return {
-		browser,
-		page
+const opt = {
+	headless: false,
+	dumpio: true
+};
+
+class HeadLess {
+	constructor(options) {
+		this.options = options;
+		this.reloadBrowser(options);
 	}
-})();
+
+	async getBrowser(){
+		return this.browser;
+	}
+
+	async reloadBrowser(options){
+		let browser = await puppeteer.launch(options || this.options);
+		this.browser = browser;
+		return this.browser;
+	}
+}
+module.exports = new HeadLess(opt);

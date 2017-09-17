@@ -1,4 +1,5 @@
 {
+	"name": "autoTest",
 	"url": "https://www.baidu.com",
 	"trace": true,
 	"console": true,
