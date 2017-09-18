@@ -22,6 +22,7 @@ module.exports = {
 		"power-by": "puppeteer"
 	},
 	"viewports": [{
+		name: 'test',
 		viewport: {
 			width: 400,
 			height: 300,
@@ -145,6 +146,16 @@ module.exports = {
 				}]
 			}
 		],
+	}, {
+		name: 'test2',
+		viewport: {
+			width: 1536,
+			height: 700,
+			deviceScaleFactor: 1,
+			isMobile: false,
+			hasTouch: false,
+			isLandscape: false
+		},
 	}],
 	"actions":[
 		// {
