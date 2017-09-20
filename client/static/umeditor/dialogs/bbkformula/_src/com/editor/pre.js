@@ -1,0 +1,1 @@
+if (!com.wiris.editor) com.wiris.editor = {};

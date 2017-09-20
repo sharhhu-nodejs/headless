@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript">
+        try {
+            document.domain = 'lewen.com';
+        } catch (e) {
+            window.console.log(e);
+        }
+    </script>
+    <style>
+    html,
+    body,
+    .main {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    .main {
+        width: 1024px;
+        height: 1024px;
+    }
+    </style>
+    <!--[if lt IE 9]>
+        <style type="text/css">
+        @font-face {
+            font-family: 'Conv_a';
+            src: url('/v1/formula/resources/fonts/a.eot');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family:'Conv_math1RTL';
+            src: url('/v1/formula/resources/fonts/math1_rtl.eot');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family:'Conv_math1';
+            src: url('/v1/formula/resources/fonts/math1.eot');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family:'Conv_horizontal';
+            src: url('/v1/formula/resources/fonts/horizontal.eot');
+            font-weight: normal;
+            f
+
+        @font-face {
+            font-family:'Conv_brackets';
+            src: url('/v1/formula/resources/fonts/brackets.eot');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family:'Conv_brack_sm';
+            src: url('/v1/formula/resources/fonts/brack_sm.eot');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family:'Conv_horizontal';
+            src: url('/v1/formula/resources/fonts/horizontal.eot'),
+                 url('/v1/formula/resources/fonts/horizontal.eot?#iefix') format('embedded-opentype'),
+                 url('/v1/formula/resources/fonts/horizontal.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        </style>
+    <![endif]-->
+    <!--[if !IE]><!-->
+        <!-- <style type="text/css">
+         @font-face {
+            font-family:'Conv_a';
+            src: url('../../../formula/resources/fonts/a.eot'),
+                 url('../../../formula/resources/fonts/a.eot?#iefix') format('embedded-opentype'),
+                 url('../../../formula/resources/fonts/a.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+
+        @font-face {
+            font-family:'Conv_math1RTL';
+            src: url('../../../formula/resources/fonts/math1_rtl.eot')，
+                 url('../../../formula/resources/fonts/math1_rtl.eot?#iefix') format('embedded-opentype'),
+                 url('../../../formula/resources/fonts/math1_rtl.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family:'Conv_math1';
+            src: url('../../../formula/resources/fonts/math1.eot'),
+                 url('../../../formula/resources/fonts/math1.eot?#iefix') format('embedded-opentype'),
+                 url('../../../formula/resources/fonts/math1.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family:'Conv_brackets';
+            src: url('../../../formula/resources/fonts/brackets.eot'),
+                 url('../../../formula/resources/fonts/brackets.eot?#iefix') format('embedded-opentype'),
+                 url('../../../formula/resources/fonts/brackets.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family:'Conv_brack_sm';
+            src: url('../../../formula/resources/fonts/brack_sm.eot'),
+                 url('../../../formula/resources/fonts/brack_sm.eot?#iefix') format('embedded-opentype'),
+                 url('../../../formula/resources/fonts/brack_sm.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family:'Conv_horizontal';
+            src: url('../../../formula/resources/fonts/horizontal.eot'),
+                 url('../../../formula/resources/fonts/horizontal.eot?#iefix') format('embedded-opentype'),
+                 url('../../../formula/resources/fonts/horizontal.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        </style> -->
+    <!--<![endif]-->
+    <link rel="stylesheet" href="/v1/formula/resources/font.css" />
+    <link rel="stylesheet" href="/v1/formula/resources/template.css" />
+</head>
+
+<body onload="">
+
+    <div id="editorContainer"></div>
+    <script src="/v1/umeditor/third-party/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        (function() {
+
+            function main() {
+                var win = window;
+                var UM = parent.UM,
+                    $iframe = $(getSelfIframe());
+
+                /* 获得当前公式所在的iframe节点 */
+                function getSelfIframe() {
+                    var iframes = parent.document.getElementsByTagName('iframe');
+
+                    for (var key in iframes) {
+                        if (iframes[key].contentWindow == window) {
+                            return iframes[key];
+                        }
+                    }
+
+                    return null;
+                }
+
+                /* 公式 */
+                var Formula = function() {
+                    var _this = this;
+
+                    this.isInit = true;
+                    this.isFocus = false;
+                    this.isDisabled = false;
+
+                    this.editor = com.wiris.jsEditor.JsEditor.newInstance({
+                        'toolbar': false,
+                        'color': '#3CB371',//'#3CB371',
+                        // 'fontfamily': 'italic',
+                        // 'fontstyle': 'italic',
+                        // 'autoItalic': true,
+                        'fontweight': 'bold',
+                        'language': 'zh-ch',
+                        'allowInnerNewLines': true
+                    });
+
+                    var editorElement = this.editor.getElement();
+                    var editorContainer = document.getElementById('editorContainer');
+
+                    this.editor.insertInto(editorContainer);
+
+                    _this.editor.onIsReady(function() {
+                        console.log('初始化完毕！');
+
+                    });
+
+                    this.editor.on('blur', function(e) {
+                        console.log('math editor::blur');
+                        try{
+                            _this.editor.editorModel.clearCaretInterval();
+                            _this.editor.editorModel.clearBlink();
+                        }catch(e){
+                        }
+                    });
+
+                    this.editor.on('focus', function(e) {
+                        
+                        _this.editor.editorModel.setCaretInterval();
+                    });
+                }
+
+                Formula.prototype = {
+                    focus: function() {
+                        this.editor.focus();
+                    },
+                    blur: function() {
+                        this.editor.blur();
+                    },
+
+                    clear: function() {
+                        this.editor.setMathML('<math></math>');
+                        this.editor.focus();
+                    },
+                    action: function(action) {
+                        this.focus();
+                        this.editor.action(action);
+                    },
+
+                    insertMathML: function(mml) {
+                        this.focus();
+                        this.editor.insertMathML(mml);
+                    },
+
+                    setMathML: function(mml) {
+                        this.focus();
+                        this.editor.setMathML(mml);
+                    }
+                };
+
+                /* 绑定到window上，给上级window调用 */
+                parent.window.initFormula = window.formula = new Formula();
+            }
+
+            window.onload = function() {
+                if (!!document.documentMode) {
+                    setTimeout(function() {
+                        main()
+                    }, 0);
+                } else {
+                    main();
+                }
+            };
+        })();
+    </script>
+    <script src="/v1/formula/formula.js"></script>
+</body>
+
+</html>

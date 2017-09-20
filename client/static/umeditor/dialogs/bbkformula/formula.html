@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    html,
+    body,
+    .main {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    .main {
+        width: 1024px;
+        height: 1024px;
+    }
+    </style>
+    <!--[if !IE]><!-->
+        <!-- <style type="text/css">
+         @font-face {
+            font-family:'Conv_a';
+            src: url('resources/fonts/a.eot'),
+                 url('resources/fonts/a.eot?#iefix') format('embedded-opentype'),
+                 url('resources/fonts/a.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+
+        @font-face {
+            font-family:'Conv_math1RTL';
+            src: url('resources/fonts/math1_rtl.eot')，
+                 url('resources/fonts/math1_rtl.eot?#iefix') format('embedded-opentype'),
+                 url('resources/fonts/math1_rtl.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family:'Conv_math1';
+            src: url('resources/fonts/math1.eot'),
+                 url('resources/fonts/math1.eot?#iefix') format('embedded-opentype'),
+                 url('resources/fonts/math1.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family:'Conv_brackets';
+            src: url('resources/fonts/brackets.eot'),
+                 url('resources/fonts/brackets.eot?#iefix') format('embedded-opentype'),
+                 url('resources/fonts/brackets.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family:'Conv_brack_sm';
+            src: url('resources/fonts/brack_sm.eot'),
+                 url('resources/fonts/brack_sm.eot?#iefix') format('embedded-opentype'),
+                 url('resources/fonts/brack_sm.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family:'Conv_horizontal';
+            src: url('resources/fonts/horizontal.eot'),
+                 url('resources/fonts/horizontal.eot?#iefix') format('embedded-opentype'),
+                 url('resources/fonts/horizontal.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        </style> -->
+    <!--<![endif]-->
+    <link rel="stylesheet" href="resources/font.css" />
+    <link rel="stylesheet" href="resources/template.css" />
+</head>
+
+<body onload="">
+
+    <div id="editorContainer"></div>
+    <script src="jquery.min.js"></script>
+
+    <script type="text/javascript">
+        (function() {
+
+            function main() {
+                var win = window;
+                var NEWMATHML = ['<math xmlns="http://www.w3.org/1998/Math/MathML" id="new"></math>', '%3Cmath%20xmlns=%22http://www.w3.org/1998/Math/MathML%22%20id=%22new%22%3E%3C/math%3E'];
+                var UM = parent.UM,
+                    $iframe = $(window.frameElement),
+                    editorId = $iframe.parents('.edui-body-container').attr('id'),
+                    editor = UM.getEditor(editorId),
+                    timer;
+                    console.log(editor, 'adasd');
+
+                var frameOffset = {top: 0, left: 0};
+
+                /* 获得当前公式所在的iframe节点 */
+                function getSelfIframe() {
+                    var iframes = parent.document.getElementsByTagName('iframe');
+
+                    for (var key in iframes) {
+                        if (iframes[key].contentWindow == window) {
+                            return iframes[key];
+                        }
+                    }
+
+                    return null;
+                }
+
+                function getMathML() {
+                    var mathml = $iframe.attr('data-mathml');
+                    return mathml ? unescape(mathml) : '';
+                }
+
+                function getAction() {
+                    return UM.utils.html($iframe.attr('data-action'));
+                }
+
+                var now = Date.now || function() {
+                    return new Date().getTime();
+                };
+
+                function throttle(func, wait, options) {
+                    var context, args, result;
+                    var timeout = null;
+                    var previous = 0;
+                    if (!options) options = {};
+                    var later = function() {
+                        previous = options.leading === false ? 0 : now();
+                        timeout = null;
+                        result = func.apply(context, args);
+                        if (!timeout) context = args = null;
+                    };
+                    return function() {
+                        var _now = now();
+                        if (!previous && options.leading === false) previous = _now;
+                        var remaining = wait - (_now - previous);
+                        context = this;
+                        args = arguments;
+                        if (remaining <= 0 || remaining > wait) {
+                            if (timeout) {
+                                clearTimeout(timeout);
+                                timeout = null;
+                            }
+                            previous = _now;
+                            result = func.apply(context, args);
+                            if (!timeout) context = args = null;
+                        } else if (!timeout && options.trailing !== false) {
+                            timeout = setTimeout(later, remaining);
+                        }
+                        return result;
+                    };
+                };
+
+                var computeFrameOffset = throttle(function(dims) {
+                    if (typeof dims === 'undefined') {
+                        var dims = { top: 0, left: 0 };
+                    }
+
+                    var frames = win.parent.document.getElementsByTagName('iframe');
+                    var frame;
+                    var found = false;
+
+                    for (var i = 0, len = frames.length; i < len; i++) {
+                        frame = frames[i];
+                        if (frame.contentWindow == win) {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (found) {
+                        var rect = frame.getBoundingClientRect();
+                        dims.left += rect.left;
+                        dims.top += rect.top;
+                        // if (win !== top) {此处会导致无限循环，第一次获取到的值就是准确的
+                        //     computeFrameOffset(dims);
+                        // }
+                    }
+
+                    var frameWidth = win.parent.$(frame).width();
+                    var frameHeight= win.parent.$(frame).height();
+                    dims.frameWidth = frameWidth;
+                    dims.frameHeight = frameHeight;
+                    frameOffset = dims;
+                }, 1500);
+
+                /* 保存场景 */
+                function saveScene() {
+                    timer && clearTimeout(timer);
+                    timer = setTimeout(function() {
+                        if(!editor){
+                            return;
+                        }
+                        editor.fireEvent('savescene');
+                        editor.fireEvent('contentchange');
+                        editor.fireEvent('selectionchange');
+                        timer = null;
+                    }, 300);
+                }
+
+                /* 设置编辑器可编辑 */
+                function enableEditor() {
+                    if(!editor){
+                        return;
+                    }
+                    if (editor.body.contentEditable == 'false') {
+                        editor.setEnabled();
+                    }
+                }
+
+                /* 设置编辑器不可编辑 */
+                function disableEditor() {
+                    if(!editor){
+                        return;
+                    }
+                    if (editor.body && editor.body.contentEditable == 'true') {
+                        //打开此处以使输入法在中文状态下不删除公式
+                        editor.setDisabled(['undo', 'redo', 'preview', 'bbkformula'], true);
+                    }
+                }
+
+                // 过滤mathml标签
+                function filterMath(str) {
+                    var str1 = '<object id="[default] http://www.w3.org/1998/Math/MathMLPlayer" classid="clsid:32F66A20-7614-11D4-BD11-00104BD3F987"></object>',
+                        str2 = '&lt;?IMPORT NAMESPACE = [default] http://www.w3.org/1998/Math/MathML URN = &quot;http://www.w3.org/1998/Math/MathML&quot; IMPLEMENTATION = &quot;#[default] http://www.w3.org/1998/Math/MathMLPlayer&quot; DECLARENAMESPACE /&gt;',
+                        str3 = '<?IMPORT NAMESPACE = [default] http://www.w3.org/1998/Math/MathML URN = "http://www.w3.org/1998/Math/MathML" IMPLEMENTATION = "#[default] http://www.w3.org/1998/Math/MathMLPlayer" DECLARENAMESPACE />',
+                        str4 = '<?XML:NAMESPACE PREFIX = [default] http://www.w3.org/1998/Math/MathML NS = "http://www.w3.org/1998/Math/MathML" />';
+
+                    return str.replace(str1, '').replace(str2, '').replace(str3, '').replace(str4, '');
+                }
+
+                /* 公式 */
+                var Formula = function() {
+                    var _this = this,
+                        mathml = filterML(getMathML()),
+                        action = getAction();
+                        if(mathml){
+                            var div = document.createElement('div');
+
+                            div.innerHTML = mathml;
+                            mathml = div.innerHTML;
+                        }
+
+                    console.log(action, mathml, 'action, mathml');
+                    var isInsert = $iframe.attr('data-insert') == 'true';
+
+                    this.isInit = true;
+                    this.isFocus = false;
+                    this.isDisabled = false;
+
+                    this.editor = com.wiris.jsEditor.JsEditor.newInstance({
+                        'toolbar': false,
+                        'color': '#339966',//'#3CB371',
+                        // 'fontfamily': 'italic',
+                        // 'fontstyle': 'italic',
+                        // 'autoItalic': true,
+                        'fontweight': 'bold',
+                        'lineFeed': editor ? editor.options.wrap : false,
+                        'language': 'zh-ch',
+                        'allowInnerNewLines': true
+                    });
+
+                    //由于存在空白标签导致渲染不正常，mtext标签会有边框，此处暂时用mi代替
+                    function filterML(mathML){
+                        if(!mathML){return;}
+                        mathML = mathML.replace(/<([a-z]+)\s*([^>]*?)><\/\1>/gi, function(reg, s1, s2){
+                            if(s1 === 'mtext'){
+                                return '<mi>&nbsp;</mi>';
+                            }else if(s1 === 'mtr'){
+                                return '<mtr'+(s2?' '+s2:'')+'><mtd><mo>&nbsp;</mo></mtd></mtr>';
+                            }else if(s1 === 'mtable'){
+                                return '<mtable'+(s2?' '+s2:'')+'><mtr><mtd><mo>&nbsp;</mo></mtd></mtr></mtable>';
+                            }else if(s1 === 'math'){
+                                return '<math'+(s2 ? ' '+s2:'')+'></math>';
+                            }else if(s1 === 'mi'){
+                                return '<mi>&nbsp;</mi>';
+                            }else if(s1 === 'mo'){
+                                return '<mo>&nbsp;</mo>';
+                            }else if(s1 === 'mn'){
+                                return '<mo>&nbsp;</mo>';
+                            }
+                            return '<'+s1+(s2?' '+s2:'')+'><mo>&nbsp;</mo></'+s1+'>';
+                        })
+                        .replace(/<mtext>/gi, '<mi>')
+                        .replace(/<\/mtext>/gi, '</mi>')
+
+                        .replace(/<([a-z]+)\s*([^>]*?)><mi>&nbsp;<\/mi><\/\1>/gi, function(reg, s1, s2){
+                            //空的mtd会导致空白的框出现
+                            if(s1 === 'mtr'){
+                                return '<mtr'+(s2 ? ' '+s2: '')+'><mtd><mo>&nbsp;</mo></mtd></mtr>'
+                            }
+                            return '<'+s1+(s2 ? ' '+s2: '')+'><mi>&nbsp;<\/mi>'+'</'+s1+'>';
+                        })
+                        return mathML;
+                    }
+
+                    var editorElement = this.editor.getElement();
+                    var editorContainer = document.getElementById('editorContainer');
+
+                    this.editor.insertInto(editorContainer);
+                    if (action) {
+                        if(mathml && !/<math\s*[^>]*?><\/math>/gi.test(mathml)){
+                            this.editor.setMathML(mathml);
+                        }else{
+                            this.editor.action(action);
+                        }
+                    
+                    } else if (mathml) {
+                        this.editor.setMathML(mathml);
+                    } else {
+                        this.editor.setMathML('<math></math>');
+                    }
+
+                    $(editorContainer).on('dblclick', function() {
+                        if (_this.disabled) return false;
+                        _this.showFullFormula();
+                        UM.fullFormulaIsFocus = true;
+                        disableEditor();
+
+                        _this.focus();
+                        setTimeout(function() {
+                            if (!$iframe.hasClass('bbk-edui-formula-active')) {
+                                _this.blur();
+                            }
+                        }, 100);
+
+                    });
+
+                    $(editorContainer).on('click', function() {
+                        if (_this.disabled) return false;
+                        // _this.hideFullFormula();
+                        // UM.fullFormulaIsFocus = false;
+                        disableEditor();
+                    });
+
+                    if (isInsert) _this.focus();
+                    _this.focus();
+                    // 新建公式的时候备份range。不然在中文输入法的情况下会有删除公式的bug。
+                    disableEditor();
+
+                    if(editor){
+
+                        editor.addListener('click', function(){
+                            _this.blur();
+                            enableEditor();
+                        });
+
+                        /* 里面focus,编辑器也判断为focus */
+                        editor.addListener('isFocus', function(){
+                            return _this.isFocus;
+                        });
+
+                        /* um不可用,公式也不可编辑 */
+                        editor.addListener('setDisabled', function(type, except){
+                            if (!(except && except.join(' ').indexOf('formula') != -1) && _this.isDisabled != true ) {
+                                _this.setDisabled();
+                            }
+                        });
+
+                        editor.addListener('setEnabled', function(){
+                            if (_this.isDisabled != false) {
+                                _this.setEnabled();
+                            }
+                        });
+                    }
+
+
+                    _this.editor.onIsReady(function() {
+                        if(editor){
+                            editor.formulaRenderedNum -= 1;
+                            if (!editor.formulaRenderedNum) {
+                                editor.fireEvent('formulaRendered');
+                            }
+                        }
+
+                        //如果初始化,加一个id为new，以表示是在工具栏插入时的情况，如果保存了这样的iframe，还是会出现编辑框弹出的情况
+                        if(NEWMATHML.indexOf(getMathML()) !== -1){
+                            _this.focus();
+                        }
+
+                    });
+
+                    this.editor.on('blur', function(e) {
+                        console.log('math editor::blur');
+                        UM.fullFormulaIsFocus = false;
+                        setTimeout(function() {
+                            if (!UM.fullFormulaIsFocus && UM.fullFormulaEditOpenState) {
+                                $iframe.removeClass('bbk-edui-formula-active');
+                                // _this.hideFullFormula();
+                                _this.editor.editorModel.clearCaretInterval();
+                                try{
+                                    _this.editor.editorModel.clearBlink();
+                                }catch(e){
+                                }
+                            }else{
+                                //判断其他iframe处于focus状态时会把自己的active状态移除
+                                if($iframe.hasClass('bbk-edui-formula-active')){
+                                    if(!UM.matricesIn && editorId !== undefined){
+                                        _this.focus();
+                                    }
+                                    // setTimeout(function(){/
+                                    // }, 3000) 
+                                }
+                            }
+                        }, 300);
+                    });
+
+                    this.editor.on('focus', function(e) {
+                        // console.log('math editor::focus');
+                        //由于跨iframe不触发editor失去和获取焦点的事件，这里强制设置当前的编辑器为自己的编辑器
+                        var myParentBody = $iframe.parents('.edui-body-container');
+                        if(myParentBody.length && editor){
+                            if(parent.currentActiveEditor){
+                                if(myParentBody[0] !== parent.currentActiveEditor.body){
+                                    parent.currentActiveEditor = parent.UM.getEditor(myParentBody.attr('id'));       
+                                }
+                            }else{
+                                parent.currentActiveEditor = parent.UM.getEditor(myParentBody.attr('id'));
+                            }
+                        }
+                        $(parent.document.body).find('.bbk-edui-formula-active').removeClass('bbk-edui-formula-active');
+                        $iframe.addClass('bbk-edui-formula-active');
+                        // _this.showFullFormula();
+                        UM.fullFormulaIsFocus = true;
+                        _this.editor.editorModel.setCaretInterval();
+                    });
+
+                    /* 设置更新外层iframe的大小和属性 */
+                    $(document.body)
+                        .on('keydown', function(e){
+                            if (/(37|38|39|40)/.test(e.keyCode)) {
+                                _this.updateIframe();
+                            } else {
+                                setTimeout(function() {
+                                    _this.updateIframe(8, 8);
+                                }, 50);
+                            }
+
+                            if(e.ctrlKey && e.keyCode === 81){
+                                if(UM.fullFormulaEditOpenState){
+                                    _this.hideFullFormula();
+                                }else{
+                                    _this.showFullFormula();
+                                }
+                            }
+                        })
+                        .on('keyup', function(e) {
+                            _this.updateIframe();
+                        });
+
+                    /* 初始化后延迟刷新外层iframe大小 */
+                    setTimeout(function(){
+                        _this.updateIframe();
+                    }, 300);
+                }
+
+                Formula.prototype = {
+                    focus: function() {
+                        $iframe.addClass('bbk-edui-formula-active');
+                        this.editor.focus();
+                        // if(!$iframe.css('edui-formula-active')){
+                        if(this.isInit){
+                            this.isInit = false;
+                            var etool = parent.$('#edui-fullformula');
+                            if(!UM.fullFormulaEditOpenState ||etool.is(':hidden')){
+
+                                this.showFullFormula();//点击公式按钮时计算当前插入光标的位置
+                            }
+                        }
+                        // }
+                        UM.fullFormulaIsFocus = true;
+                    },
+                    blur: function() {
+                        // this.hideFullFormula();
+                        this.editor.blur();
+                        $iframe.removeClass('bbk-edui-formula-active');
+                        // UM.fullFormulaIsFocus = false;
+                    },
+
+                    updateToolbar: function(el){
+                        UM.fullFormulaAction.updateToolbar(el);
+                    },
+
+                    clear: function() {
+                        this.editor.setMathML('<math></math>');
+                        this.editor.focus();
+                    },
+
+                    showFullFormula: function() {
+                        computeFrameOffset();
+
+                        //针对第一次定位不准的问题
+                        
+                        editor && UM.fullFormulaAction.show(frameOffset.top, frameOffset.left, frameOffset.frameWidth, frameOffset.frameHeight);
+                    },
+
+                    hideFullFormula: function(){
+                        UM.fullFormulaAction.hide();
+                    },
+
+                    updateIframe: function(increaseWidth, increaseHeight) {
+                        increaseWidth  = increaseWidth || 10;
+                        increaseHeight = increaseHeight || 8;
+
+                        var $el = $('.wrs_container');
+
+                        $iframe
+                            .css({'width': $el.width() + increaseWidth, 'height': $el.height() + increaseHeight, 'vertical-align': parseInt($el.css('verticalAlign'), 10) - 4 + 'px'});
+
+                        var iframe = $iframe[0];
+                        var parent = iframe.parentNode;
+                        iframe.scrollIntoViewIfNeeded();
+
+                        var _offsetLeft = iframe.offsetLeft - parent.offsetLeft + iframe.clientWidth;
+                        var overRight = _offsetLeft > (parent.scrollLeft + parent.clientWidth);
+                        if (overRight) {
+                            $iframe.parent().scrollLeft(_offsetLeft + 20);
+                        }
+
+                        var mathml = $iframe.attr('data-mathml'),
+                            newMathML = escape(this.getMathML());
+
+                        if (mathml != newMathML) {
+                            $iframe.attr('data-mathml', newMathML);
+                            editor && saveScene();
+                        }
+                    },
+
+                    action: function(action) {
+                        this.focus();
+                        this.editor.action(action);
+                        this.updateIframe();
+                    },
+
+                    insertMathML: function(mml) {
+                        this.focus();
+                        this.editor.insertMathML(mml);
+                        this.updateIframe();
+                    },
+
+                    setMathML: function(mml) {
+                        mml = filterMath(mml);
+
+                        this.focus();
+                        this.editor.setMathML(mml);
+                        this.updateIframe();
+                    },
+
+                    getMathML: function() {
+                        return this.editor.getMathML();
+                    },
+
+                    setDisabled: function() {
+                        this.blur();
+                        var mml = this.getMathML();
+                        this.updateIframe();
+                        this.isDisabled = true;
+                    },
+
+                    setEnabled: function() {
+                        this.refresh();
+                        this.isDisabled = false;
+                    },
+
+                    refresh: function() {
+                        this.updateIframe();
+                    }
+                };
+
+                /* 绑定到window上，给上级window调用 */
+                parent.window.formula = window.formula = new Formula();
+            }
+
+            window.onload = function() {
+                if (!!document.documentMode) {
+                    setTimeout(function() {
+                        main()
+                    }, 0);
+                } else {
+                    main();
+                }
+            };
+        })();
+    </script>
+    <script src="formula.js"></script>
+</body>
+
+</html>

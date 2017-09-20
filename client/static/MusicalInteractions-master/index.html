@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Musical Interactions | Codrops</title>
+		<meta name="description" content="Some experimental ideas for playful musical interactions" />
+		<meta name="piano__keywords" content="music, web audio api, instruments, midi, interaction, web, website, sound" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="https://fonts.googleapis.com/css?family=Quicksand:700|Arapey" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/instruments.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<!-- polyfills -->
+		<script src="js/inc/shim/Base64.js" type="text/javascript"></script>
+		<script src="js/inc/shim/Base64binary.js" type="text/javascript"></script>
+		<script src="js/inc/shim/WebAudioAPI.js" type="text/javascript"></script>
+		<!-- midi.js package -->
+		<script src="js/midi/audioDetect.js" type="text/javascript"></script>
+		<script src="js/midi/gm.js" type="text/javascript"></script>
+		<script src="js/midi/loader.js" type="text/javascript"></script>
+		<script src="js/midi/plugin.audiotag.js" type="text/javascript"></script>
+		<script src="js/midi/plugin.webaudio.js" type="text/javascript"></script>
+		<script src="js/midi/plugin.webmidi.js" type="text/javascript"></script>
+		<!-- utils -->
+		<script src="js/util/dom_request_xhr.js" type="text/javascript"></script>
+
+		<!--[if IE]>
+  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<script>document.documentElement.className = 'js';</script>
+	</head>
+	<body class="loading">
+		<svg class="hidden">
+			<symbol id="icon-arrow" viewBox="0 0 24 24">
+				<title>arrow</title>
+				<polygon points="6.3,12.8 20.9,12.8 20.9,11.2 6.3,11.2 10.2,7.2 9,6 3.1,12 9,18 10.2,16.8 "/>
+			</symbol>
+			<symbol id="icon-drop" viewBox="0 0 24 24">
+				<title>drop</title>
+				<path d="M12,21c-3.6,0-6.6-3-6.6-6.6C5.4,11,10.8,4,11.4,3.2C11.6,3.1,11.8,3,12,3s0.4,0.1,0.6,0.3c0.6,0.8,6.1,7.8,6.1,11.2C18.6,18.1,15.6,21,12,21zM12,4.8c-1.8,2.4-5.2,7.4-5.2,9.6c0,2.9,2.3,5.2,5.2,5.2s5.2-2.3,5.2-5.2C17.2,12.2,13.8,7.3,12,4.8z"/><path d="M12,18.2c-0.4,0-0.7-0.3-0.7-0.7s0.3-0.7,0.7-0.7c1.3,0,2.4-1.1,2.4-2.4c0-0.4,0.3-0.7,0.7-0.7c0.4,0,0.7,0.3,0.7,0.7C15.8,16.5,14.1,18.2,12,18.2z"/>
+			</symbol>
+			<symbol id="icon-github" viewBox="0 0 32.58 31.77">
+				<title>github</title>
+				<path d="M16.29,0a16.29,16.29,0,0,0-5.15,31.75c.81.15,1.11-.35,1.11-.79s0-1.41,0-2.77C7.7,29.18,6.74,26,6.74,26a4.31,4.31,0,0,0-1.81-2.38c-1.48-1,.11-1,.11-1a3.42,3.42,0,0,1,2.5,1.68,3.47,3.47,0,0,0,4.74,1.35,3.48,3.48,0,0,1,1-2.18C9.7,23.08,5.9,21.68,5.9,15.44a6.3,6.3,0,0,1,1.68-4.37,5.86,5.86,0,0,1,.16-4.31s1.37-.44,4.48,1.67a15.44,15.44,0,0,1,8.16,0c3.11-2.11,4.48-1.67,4.48-1.67A5.85,5.85,0,0,1,25,11.07a6.29,6.29,0,0,1,1.67,4.37c0,6.26-3.81,7.63-7.44,8a3.89,3.89,0,0,1,1.11,3c0,2.18,0,3.93,0,4.47s.29.94,1.12.78A16.29,16.29,0,0,0,16.29,0Z"></path>
+			</symbol>
+		</svg>
+		<main>
+			<section class="content content--instrument content--piano content--cursor-dark">
+				<div class="piano instrument">
+					<svg class="piano__inner" xmlns:note="http://tympanus.net/codrops" viewBox="0 0 2080 200" preserveAspectRatio="none">
+						<g class="piano__keys piano__keys--natural">
+							<rect note:id="0" x="0" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="2" x="40" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="3" x="80" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="5" x="120" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="7" x="160" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="8" x="200" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="10" x="240" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="12" x="280" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="14" x="320" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="15" x="360" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="17" x="400" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="19" x="440" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="20" x="480" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="22" x="520" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="24" x="560" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="26" x="600" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="27" x="640" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="29" x="680" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="31" x="720" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="32" x="760" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="34" x="800" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="36" x="840" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="38" x="880" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="39" x="920" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="41" x="960" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="43" x="1000" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="44" x="1040" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="46" x="1080" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="48" x="1120" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="50" x="1160" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="51" x="1200" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="53" x="1240" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="55" x="1280" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="56" x="1320" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="58" x="1360" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="60" x="1400" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="62" x="1440" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="63" x="1480" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="65" x="1520" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="67" x="1560" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="68" x="1600" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="70" x="1640" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="72" x="1680" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="74" x="1720" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="75" x="1760" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="77" x="1800" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="79" x="1840" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="80" x="1880" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="82" x="1920" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="84" x="1960" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="86" x="2000" class="piano__key piano__key--natural" width="40" height="200"/>
+							<rect note:id="87" x="2040" class="piano__key piano__key--natural" width="40" height="200"/>
+						</g>
+						<g class="piano__keys piano__keys--flat">
+							<rect note:id="1" x="30" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="4" x="110" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="6" x="150" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="9" x="230" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="11" x="270" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="13" x="310" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="16" x="390" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="18" x="430" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="21" x="510" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="23" x="550" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="25" x="590" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="28" x="670" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="30" x="710" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="33" x="790" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="35" x="830" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="37" x="870" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="40" x="950" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="42" x="990" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="45" x="1070" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="47" x="1110" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="49" x="1150" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="52" x="1230" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="54" x="1270" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="57" x="1350" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="59" x="1390" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="61" x="1430" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="64" x="1510" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="66" x="1550" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="69" x="1630" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="71" x="1670" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="73" x="1710" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="76" x="1790" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="78" x="1830" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="81" x="1910" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="83" x="1950" class="piano__key piano__key--flat" width="20" height="130"/>
+							<rect note:id="85" x="1990" class="piano__key piano__key--flat" width="20" height="130"/>
+						</g>
+					</svg>
+				</div><!-- piano -->
+			</section>
+		</main>
+		<!-- keyboard events : used for the piano - assign keyboard keys to piano keys -->
+		<script src="js/mousetrap.min.js"></script>
+		<!-- the canvas wave animation -->
+		<script src="js/siriwave.js"></script>
+		<!-- js media queries : display the different sizes of pianos for different screen sizes -->
+		<script src="js/enquire.min.js"></script>
+		<!-- for some animations -->
+		<script src="js/anime.min.js"></script>
+		<!-- helper functions -->
+		<script src="js/helper.js"></script>
+		<!-- the piano -->
+		<script src="js/piano.js"></script>
+		<!-- main script -->
+		<script src="js/main.js"></script>
+	</body>
+</html>

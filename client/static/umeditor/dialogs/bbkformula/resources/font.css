@@ -1,0 +1,69 @@
+@font-face {
+    font-family: 'Conv_a';
+    src: url('fonts/a.eot'), url('fonts/a.eot?#iefix') format('embedded-opentype'), url('fonts/a.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Conv_math1RTL';
+    src: url('fonts/math1_rtl.eot')， url('fonts/math1_rtl.eot?#iefix') format('embedded-opentype'), url('fonts/math1_rtl.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Conv_math1';
+    src: url('fonts/math1.eot'), url('fonts/math1.eot?#iefix') format('embedded-opentype'), url('fonts/math1.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Conv_brackets';
+    src: url('fonts/brackets.eot'), url('fonts/brackets.eot?#iefix') format('embedded-opentype'), url('fonts/brackets.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Conv_brack_sm';
+    src: url('fonts/brack_sm.eot'), url('fonts/brack_sm.eot?#iefix') format('embedded-opentype'), url('fonts/brack_sm.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Conv_horizontal';
+    src: url('fonts/horizontal.eot'), url('fonts/horizontal.eot?#iefix') format('embedded-opentype'), url('fonts/horizontal.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'horizontal';
+    src: url('fonts/horizontal.eot'), url('fonts/horizontal.eot?#iefix') format('embedded-opentype'), url('fonts/horizontal.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.wrs_aChar {
+    /* Text with a font */
+    font-family:'Conv_a';
+}
+.wrs_mathChar {
+    /* Text with math font */
+    font-family:'Conv_math1';
+}
+.wrs_mathRTLChar {
+    /* Text with math font */
+    font-family:'Conv_math1RTL';
+}
+.wrs_horizontalChar {
+    /* Text with horizontal font */
+    font-family:'Conv_horizontal';
+}
+.wrs_specialChar {
+    /* Text with special font */
+    font-family:'Conv_brackets';
+}
+.wrs_specialSmallChar{
+    /* Text with special small font */
+    font-family:'Conv_brack_sm';
+}

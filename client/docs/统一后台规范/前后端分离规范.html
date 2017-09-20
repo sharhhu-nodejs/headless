@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<style type="text/css">
+        :root {
+            /* General color properties */
+
+            --main-text-color: #333;
+            --secondary-text-color: #888;
+
+            --main-element-color: #e7e7e7;
+            --energetic-element-color: #b5b5b5;
+            --structural-element-color: #f0f0f0;
+
+            --main-bg-color: #fff;
+
+            /* Other properties */
+
+            --use-default: null; /* Invalid value to prevent changing the property */
+
+            /* Elements properties */
+
+            --column-border-color: var(--structural-element-color);
+
+            --body-color: var(--main-text-color);
+            --link-color: var(--use-default);
+            --textarea-color: #111;
+            --body-bg-color: var(--main-bg-color);
+
+            --top-panel-link-color: var(--main-text-color);
+            --top-panel-bg-color: var(--structural-element-color);
+            --top-panel-border-color: var(--structural-element-color);
+
+            --top-panel-close-color: #999;
+            --top-panel-close-hover-color: #777;
+            --top-panel-close-hover-bg-color: #d7d7d7;
+
+            --top-panel-btn-bg-color: #e0e0e0;
+            --top-panel-btn-active-bg-color: #d0d0d0;
+            --top-panel-btn-disabled-bg-color: #d0d0d0;
+
+            --top-bar-button-color: var(--secondary-text-color);
+            --top-bar-button-bg-color: var(--structural-element-color);
+            --top-bar-button-active-bg-color: var(--main-element-color);
+            --top-bar-button-enabled-border-color: var(--energetic-element-color);
+
+            --top-bar-arrow-bg-color: #eaeaea;
+            --top-bar-arrow-active-bg-color: #e1e1e1;
+
+            --bottom-bar-word-count-color: var(--secondary-text-color);
+
+            --file-menu-item-color: var(--secondary-text-color);
+            --file-menu-item-border-color: var(--main-element-color);
+            --file-menu-item-enabled-border-color: var(--energetic-element-color);
+            
+            --file-menu-item-close-color: var(--energetic-element-color);
+            --file-menu-item-close-hover-color: var(--secondary-text-color);
+            --file-menu-item-close-hover-bg-color: var(--main-element-color);
+            --file-menu-item-edited-close-bg-color: var(--energetic-element-color);
+            --file-menu-item-edited-close-border-color: var(--main-bg-color);
+
+            --modal-bg-color: var(--main-bg-color);
+            --modal-border-color: var(--energetic-element-color);
+
+            --modal-button-color: var(--secondary-text-color);
+            --modal-button-border-color: var(--energetic-element-color);
+            --modal-button-primary-color: var(--main-text-color);
+            --modal-button-primary-border-color: var(--secondary-text-color);
+            --modal-button-active-bg-color: #f7f7f7;
+
+            --drag-mask-color: #999;
+            --drag-mask-bg-color: rgba(255, 255, 255, .8);
+            --drag-mask-border-color: #ddd;
+
+            --quote-border-color: var(--main-element-color);
+            --hr-border-color: var(--main-element-color);
+            --table-border-color: var(--main-element-color);
+            --table-row-even-bg-color: #f8f8f8;
+            --pre-text-bg-color: var(--main-element-color);
+            --pre-text-highlighted-bg-color: #d7d7d7;
+
+            --settings-light-theme-control: none;
+            --settings-dark-theme-control: inline;
+
+            --scrollbar-size: var(--use-default);
+            --scrollbar-button-size: var(--use-default);
+            --scrollbar-button-display: var(--use-default);
+            --scrollbar-corner-bg-color: var(--use-default);
+            --scrollbar-track-bg-color: var(--use-default);
+            --scrollbar-bar-border: var(--use-default);
+            --scrollbar-thumb-bg-clip: var(--use-default);
+            --scrollbar-thumb-min-size: var(--use-default);
+            --scrollbar-thumb-bg-color: var(--use-default);
+            --scrollbar-thumb-hover-bg-color: var(--use-default);
+            --scrollbar-thumb-active-bg-color: var(--use-default);
+        }
+
+        .clearfix {
+            *zoom: 1;
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+            content: "";
+            display: table;
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+
+        div.full-height {
+            overflow: auto;
+        }
+
+        .visible-when-fullscreen,
+        .fullscreen .hidden-when-fullscreen {
+            display: none;
+        }
+
+        .fullscreen .visible-when-fullscreen,
+        .hidden-when-fullscreen {
+            display: block;
+        }
+        *{
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+
+        }
+
+        body {
+            width: 100%;
+            margin: 0;
+            padding: 10px;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 14px;
+            line-height: 20px;
+            color: var(--body-color);
+            background: var(--body-bg-color);
+        }
+
+        a {
+            color: blue;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            line-height: 1em;
+        }
+        h1{
+            text-align: center;
+            margin-bottom: 3em;
+        }
+
+        pre, code, kbd {
+            background: var(--pre-text-bg-color);
+        }
+
+        code, kbd {
+            padding: 1px 5px;
+        }
+
+        pre {
+            padding: 5px;
+            overflow-x: auto;
+            word-wrap: normal;
+        }
+
+        pre .highlight {
+            background: var(--pre-text-highlighted-bg-color);
+        }
+
+        pre code {
+            padding: 0;
+        }
+
+        blockquote {
+            border-left: 5px solid var(--quote-border-color);
+            margin: 1em 0;
+            padding-left: 10px;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid var(--hr-border-color);
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        table thead {
+            border-bottom: 2px solid var(--table-border-color);
+        }
+
+        table tbody tr:nth-child(2n) {
+            background-color: var(--table-row-even-bg-color);
+        }
+
+        table th, table td {
+            padding: 6px 13px;
+            border: 1px solid var(--table-border-color);
+        }
+
+        table th {
+            font-weight: bold;
+        }
+
+        li p {
+            margin: .5em 0;
+        }
+
+        #left-column,
+        #right-column {
+            float: left;
+            width: 50%;
+            height: 100%;
+        }
+
+        .wrapper {
+            position: relative;
+            padding: 22px 0 20px 10px;
+        }
+
+        #left-column .wrapper {
+            border-right: 1px solid var(--column-border-color);
+        }
+
+        #right-column .wrapper {
+            padding-left: 9px;
+            border-left: 1px solid var(--column-border-color);
+        }
+
+        .topbar,
+        .bottom-bar {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+        }
+
+        .bottom-bar {
+            top: auto;
+            bottom: 0;
+            padding-right: 5px;
+        }
+
+        .topbar .buttons-container {
+            float: right;
+            
+        }
+
+        .topbar .buttons-container .button,
+        .topbar .buttons-container .button-group {
+            float: left;
+        }
+
+        .topbar .buttons-container .button {
+            height: 18px;
+            padding: 2px 6px 0;
+            line-height: 18px;
+            color: var(--top-bar-button-color);
+            text-decoration: none;
+            font-size: 11px;
+            border-bottom: 2px solid transparent;
+            background: var(--top-bar-button-bg-color);
+        }
+
+        .topbar .buttons-container .button:active {
+            background: var(--top-bar-button-active-bg-color);
+        }
+
+        .topbar .buttons-container .button.active {
+            border-bottom-color: var(--top-bar-button-enabled-border-color);
+        }
+
+        .topbar .buttons-container .button-group .button.switch {
+            padding-left: 3px;
+            padding-right: 3px;
+        }
+
+        .topbar .buttons-container .button-group .button.switch:first-child {
+            padding-left: 6px;
+        }
+
+        .topbar .buttons-container .button-group .button.switch:last-child {
+            padding-right: 6px;
+        }
+
+        .topbar .buttons-container .button-group .button.switch:after {
+            content: "/";
+            position: relative;
+            right: -4px;
+        }
+
+        .topbar .buttons-container .button-group .button.switch:last-child:after {
+            content: none;
+        }
+
+        .topbar .buttons-container .button.icon-sync-scroll,
+        .topbar .buttons-container .button.icon-fullscreen {
+            width: 22px;
+            padding-left: 0;
+            padding-right: 0;
+            text-align: center;
+        }
+            
+        .topbar .buttons-container .button.icon-sync-scroll {
+            width: 18px;
+        }
+            
+        .topbar .buttons-container .button.icon-sync-scroll:before {
+            display: inline-block;
+            margin-top: 1px;
+        }
+
+        .topbar .buttons-container .button.icon-fullscreen {
+            font-size: 16px;
+        }
+
+        .topbar .buttons-container .button.icon-settings {
+            font-size: 14px;
+        }
+
+        .bottom-bar .word-count {
+            float: right;
+            height: 20px;
+            line-height: 20px;
+            font-size: 11px;
+            color: var(--bottom-bar-word-count-color);
+        }
+
+        #preview {
+            word-wrap: break-word;
+            line-height: normal;
+        }
+
+        #markdown,
+        #html {
+            display: block;
+            box-sizing: border-box;
+            width: 100%;
+            resize: none;
+            margin: 0;
+            padding: 5px 0 0;
+            border: 0;
+            -moz-tab-size: 4;
+            -o-tab-size: 4;
+            tab-size: 4;
+            color: var(--textarea-color);
+            background-color: transparent;
+        }
+
+        #markdown:focus,
+        #html:focus {
+            outline: none;
+        }
+
+        #top_panels_container {
+            max-height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        #top_panels_container .top_panel {
+            display: none;
+            position: relative;
+            padding: 10px 20px;
+            background: var(--top-panel-bg-color);
+            border-bottom: 2px solid var(--top-panel-border-color);
+        }
+
+        #top_panels_container .top_panel a {
+            color: var(--top-panel-link-color);
+        }
+
+        #top_panels_container .top_panel .close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 14px;
+            height: 14px;
+            line-height: 14px;
+            font-size: 14px;
+            text-align: center;
+            color: var(--top-panel-close-color);
+            cursor: pointer;
+            border-radius: 7px;
+        }
+
+        #top_panels_container .top_panel .close:hover {
+            color: var(--top-panel-close-hover-color);
+            background: var(--top-panel-close-hover-bg-color);
+        }
+
+        .top_panel .button {
+            padding: 5px 12px;
+            background: var(--top-panel-btn-bg-color);
+            border-radius: 3px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .top_panel .button:active {
+            background: var(--top-panel-btn-active-bg-color);
+        }
+
+        .top_panel .button.is-disabled {
+            background: var(--top-panel-btn-disabled-bg-color);
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        #quick-reference table,
+        #quick-reference > p {
+            font-size: 12px;
+            line-height: 1.25em;
+        }
+
+        #quick-reference table tr {
+            background: transparent;
+        }
+
+        #quick-reference table td {
+            padding: 1px 0;
+            border: 0;
+        }
+
+        #quick-reference table td:first-child {
+            cursor: pointer;
+        }
+
+        #quick-reference table td:last-child {
+            padding-left: 20px;
+        }
+
+        #quick-reference table td pre,
+        #quick-reference table td p {
+            margin: 0;
+        }
+
+        #quick-reference p {
+            margin-bottom: 0;
+        }
+
+        #settings #increase-font-size,
+        #settings #decrease-font-size {
+            position: relative;
+            padding: 5px 9px 5px 19px;
+            line-height: 16px;
+        }
+
+        #settings #increase-font-size:before,
+        #settings #decrease-font-size:before {
+            content: "A";
+            position: absolute;
+            top: 5px;
+            left: 9px;
+            height: 16px;
+            line-height: 16px;
+            font-family: monospace;
+        }
+
+        #settings #decrease-font-size:before {
+            font-size: 13px;
+        }
+
+        #settings #increase-font-size:before {
+            font-size: 17px;
+        }
+
+        #settings #decrease-font-size:after {
+            content: "-";
+        }
+
+        #settings #increase-font-size:after {
+            content: "+";
+        }
+
+        #settings .theme-control .button {
+            margin-left: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        #settings .theme-control.theme-control-light {
+            display: var(--settings-light-theme-control);
+        }
+
+        #settings .theme-control.theme-control-dark {
+            display: var(--settings-dark-theme-control);
+        }
+
+        #settings label {
+            padding-right: 20px;
+        }
+
+        .fullscreen #left-column,
+        .fullscreen #right-column {
+            float: none;
+            width: 100%;
+        }
+
+        .fullscreen #left-column .wrapper {
+            border-right-color: transparent;
+        }
+
+        .fullscreen #right-column .wrapper {
+            border-left-color: transparent;
+        }
+
+        .fullscreen #markdown,
+        .fullscreen #html {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+
+
+        ::-webkit-scrollbar-button {
+            width: var(--scrollbar-button-size);
+            height: var(--scrollbar-button-size);
+            display: var(--scrollbar-button-display);
+        }
+
+
+        ::-webkit-scrollbar-corner {
+            background-color: var(--scrollbar-corner-bg-color);
+        }
+
+
+        ::-webkit-scrollbar-track {
+            background-color: var(--scrollbar-track-bg-color);
+        }
+
+        ::-webkit-scrollbar-track:vertical,
+        ::-webkit-scrollbar-thumb:vertical {
+            border-left: var(--scrollbar-bar-border);
+        }
+
+        ::-webkit-scrollbar-track:horizontal,
+        ::-webkit-scrollbar-thumb:horizontal {
+            border-top: var(--scrollbar-bar-border);
+            border-bottom: var(--scrollbar-bar-border);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-clip: var(--scrollbar-thumb-bg-clip);
+        }
+
+        ::-webkit-scrollbar-thumb:vertical {
+            min-height: var(--scrollbar-thumb-min-size);
+        }
+
+        ::-webkit-scrollbar-thumb:horizontal {
+            min-width: var(--scrollbar-thumb-min-size);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: var(--scrollbar-thumb-bg-color);
+        }
+
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: var(--scrollbar-thumb-hover-bg-color);
+        }
+
+
+        ::-webkit-scrollbar-thumb:active {
+            background-color: var(--scrollbar-thumb-active-bg-color);
+        }
+    </style>
+</head>
+<body>
+<h1>前后端分离规范</h1>
+<h2>1、后端入口地址统一为<code>/projectName</code></h2>
+<p>如后端的服务器base地址为：<code>http://www.eebbk.com</code>，那么相应的入口地址应该为<code>http://www.eebbk.com/projectName</code></p>
+<h2>2、后端统一提供<code>IndexRedirectFilter</code>(统一平台提供)，作为登陆态获取。登录成功后，返回前端相应项目的index页</h2>
+<h2>3、后端只需要提供接口服务，请带上权限校验</h2>
+<h2>4、前端服务器<code>baseurl</code>地址如下</h2>
+<blockquote>
+<p>测试环境： http://172.28.2.92:9999/</p>
+</blockquote>
+<p>如后台项目取名为test-app，那么入口相应取前端的地址为：<code>http://172.28.2.92:9999/html/test-app/index.html</code></p>
+<blockquote>
+<p>正式环境：<code>http://uniplatform-front.eebbk.com</code>。</p>
+</blockquote>
+<h2>5、接口数据交互（详细见<a href="接口规范.html">接口规范</a>）</h2>
+<blockquote>
+<p>统一使用<code>Content-Type: application/json</code>格式：</p>
+</blockquote>
+<blockquote>
+<p><strong style="color: red;"><code>注意，自定义形式的content-type，在浏览器中使用ajax访问，浏览器会先向服务器发送options请求 以咨询服务器是否支持post请求和content-type请求头设置，此时服务器需要给予返回状态码200, 否则浏览器将不再发送后续的post请求信息。</code></strong></p>
+</blockquote>
+<blockquote>
+<p>请设置下面所示的请求返回信息头</p>
+</blockquote>
+<p>下面是java代码设置相应的请求返回信息头，其他语言的也一样，只是设置方法不一样：</p>
+<pre><code class="language-java">String headers = &quot;Origin, Accept-Language, Accept-Encoding,X-Forwarded-For, Connection, Accept, User-Agent, Host, Referer,Cookie, Content-Type, Cache-Control&quot;;
+response.setHeader(&quot;Access-Control-Allow-Headers&quot;, headers);//表示服务器允许浏览器可访问的信息头。浏览器会根据此结果来设置安全问题。
+response.setHeader(&quot;Access-Control-Request-Method&quot;, &quot;GET,POST,OPTIONS&quot;);//表示服务器支持的请求类型
+
+</code></pre>
+<h2>6、关于每个平台的LOGO制作，推荐使用：<a href="https://www.logojoy.com/">logojoy</a></h2>
+
+</body>
+</html>

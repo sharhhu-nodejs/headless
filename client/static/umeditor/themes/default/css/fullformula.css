@@ -1,0 +1,1528 @@
+.edui-fullformula {
+    display: none;
+    position: absolute;
+    width: 550px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    /*height: 112px;*/
+    border-radius: 5px;
+    z-index: 1000;
+    background: #fff;
+    box-shadow: 0 0 3px 4px rgba(0, 0, 0, 0.05);
+}
+.edui-btn-yushe {
+    padding: 8px 6px;
+    height: 79px;
+    font-size: 12px;
+    float: left;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    cursor: default;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    vertical-align: top;
+    margin-right: 1px;
+    transition: all .2s linear;
+}
+
+.define-btn-cancle, .define-btn-sumit{
+      width: 50%;
+      height: 45px;
+      border: none;
+      outline: none;
+      background: rgb(233, 240, 125);
+      cursor: pointer;
+     
+}
+.define-btn-sumit{
+    border-right: 1px white dashed;
+    background: rgb(182, 229, 163);
+}
+
+.define-btn-cancle:hover{
+    background:  rgb(252, 163, 0);
+}
+
+.define-btn-sumit:hover{
+    background: rgb(35, 121, 0);
+}
+
+
+
+.edui-fullformula-header{
+    height: 20px;
+    border-bottom: dashed 1px brown;
+    padding: 4px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.21);
+    margin-bottom: 2px;
+    transition: all .5s ease;
+    -webkit-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+}
+
+.edui-fullformula-header:hover {
+    cursor: move;
+    color: rgba(16, 16, 16, 1);
+}
+
+.edui-btn-close{
+    float: right;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.edui-btn-hide{
+    float: left;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.edui-btn-define{
+    width: 100%;
+    min-height: 160px;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.edui-fullformula-header .edui-btn-close:hover{
+    cursor: pointer;
+    background: rgba(247, 30, 30, 0.22);
+}
+
+.edui-fullformula-header .edui-btn-hide:hover{
+    cursor: pointer;
+    font-size: 18px;
+    background: rgba(10, 249, 40, 0.21);
+}
+
+.edui-btn-yushe:hover {
+    border-color: #EDEDED !important;
+    background: #F9F9F9 !important;
+}
+.edui-btn-yushe .edui-fullformula-icon {
+    width: 40px;
+    background: url(http://gongshi.baidu.com/assets/images/toolbar/btn.png) 0px 0px no-repeat;
+    width: 32px;
+    height: 32px;
+    margin: 2px auto;
+}
+.edui-fullformula-label {
+    color: #666;
+    text-align: center;
+    display: block;
+    font-size: 12px;
+    line-height: 20px;
+}
+.edui-fullformula-btn-sign {
+    border: 4px solid transparent;
+    border-top-color: #2d2d2d;
+    width: 0;
+    height: 0;
+    display: inline-block;
+    margin: 8px auto;
+    vertical-align: top;
+}
+.edui-fullformula-title {
+    font-weight: normal;
+    margin: 0 0 5px;
+}
+.edui-fullformula-btn-mount-point {
+    display: none;
+    border: 1px solid #b3aead;
+    border-radius: 3px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.11);
+    background: white;
+    position: absolute;
+    top: 97px;
+    left: -1px;
+    overflow: hidden;
+    height: 330px;
+    padding: 10px;
+}
+.edui-fullformula-preset-btn {
+    width: 310px;
+    height: 73px;
+    background-image: url(../images/formula-other.png);
+    background-repeat: no-repeat;
+    display: block;
+    cursor: default;
+    border: 1px solid transparent;
+    margin-bottom: 20px;
+    transition: all .2s linear;
+}
+.edui-fullformula-preset-btn:hover {
+    border-color: #D3D3D3;
+    box-shadow: 0 0 1px 2px rgba(153, 153, 153, 0.12);
+}
+.edui-fullformula-preset-item0 {
+    background-position: 21px 0px;
+}
+.edui-fullformula-preset-item1 {
+    background-position: -750px 0;
+}
+.edui-fullformula-preset-item2 {
+    background-position: -435px 0;
+}
+.edui-fullformula-btn-in {
+    border-color: #D8D8D8 !important;
+    background: #F1F1F1 !important;
+}
+.edui-fullformula-main {
+    /*float: left;*/
+    /*width: 490px;*/
+    padding-left: 5px;
+}
+.edui-fullformula-content {
+    /*width: 100%;*/
+    padding: 2px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.edui-btn-tab-item {
+    clear: both;
+    display: none;
+}
+.edui-btn-tab-item.current {
+    display: block;
+}
+.edui-fullformula-tab {
+    margin-bottom: 5px;
+}
+
+.edui-fullformula-offen, .edui-fullformula-recent {
+    display: inline-block;
+    width: 100%;
+    border-top: rgb(89, 76, 76) 1px solid;  
+    padding-top: 3px;
+}
+
+.edui-fullformula-offen {
+    padding-top: 8px;
+}
+
+.edui-fullformula-offen-title, .edui-fullformula-recent-title {
+    display: inline-block;
+    position: relative;
+    color: rgb(60, 179, 113);
+    font-weight: bolder;
+    border-right: 1px rgb(155, 152, 152) solid;
+    padding-right: 20px;
+    margin-right: 5px;
+}
+.edui-fullformula-offen-title{
+    top: -13px;
+}
+
+.edui-fullformula-group {
+    float: left;
+    border-right: 1px solid #ddd;
+}
+.edui-fullformula-group-last {
+    border-right: 0 none;
+}
+.edui-fullformula-group-item {
+    display: inline-block;
+    background-image: url(../images/formula-icons.png);
+    background-repeat: no-repeat;
+    transition: all .2s linear;
+    /*outline: 1px solid #ddd;*/
+}
+.edui-fullformula-group-item:hover {
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.18);
+    outline: 1px solid #DADADA;
+}
+.edui-fullformula-tab-item {
+    display: inline-block;
+    width: 44px;
+    height: 30px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+.edui-fullformula-tab-item:hover {
+    background-color: #eee;
+}
+.edui-fullformula-tab-item.current {
+    background-color: #ddd;
+}
+.edui-fullformula-tab-item .tab-icon{
+    display: inline-block;
+    margin: 8px auto 0;
+    width: 28px;
+    height: 17px;
+    background-image: url(../images/formula-icons.png);
+}
+.edui-fullformula-tab-item .tab-define{
+    background-position: -200px -27px;
+}
+.edui-fullformula-tab-general .tab-icon{
+    background-position: -6143px 0;
+}
+.edui-fullformula-tab-symbols .tab-icon{
+    background-position: -6196px -35px;
+    width: 24px;
+}
+.edui-fullformula-tab-arrows .tab-icon{
+    background-position: -6274px -17px;
+    width: 25px;
+}
+.edui-fullformula-tab-greek .tab-icon{
+    background-position: -6384px 0;
+}
+.edui-fullformula-tab-matrices .tab-icon{
+    background-position: -5953px -35px;
+}
+.edui-fullformula-tab-scriptsAndLayout .tab-icon{
+    background-position: -6062px 0;
+}
+.edui-fullformula-tab-bracketsAndAccents .tab-icon{
+    background-position: -6114px 0;
+}
+.edui-fullformula-tab-bigOps .tab-icon{
+    background-position: -6171px -17px;
+    width: 26px;
+}
+.edui-fullformula-tab-calculus .tab-icon{
+    background-position: -6247px 0;
+}
+.edui-fullformula-tab-contextual .tab-icon{
+    background-position: -6295px 0;
+}
+.edui-action-fraction {
+    background-position: 2px 2px;
+}
+.edui-action-bevelledFraction {
+    background-position: 2px -26px
+}
+.edui-action-squareRoot {
+    background-position: -28px -28px;
+}
+.edui-action-nRoot {
+    background-position: -55px -28px;
+}
+.edui-action-superscript {
+    background-position: -88px -25px;
+}
+.edui-action-subscript {
+    background-position: -117px -28px
+}
+.edui-action-parenthesis {
+    background-position: -142px -26px;
+}
+.edui-action-verticalBar {
+    background-position: -171px 3px;
+}
+.edui-action-squareBracket {
+    background-position: -171px -26px;
+}
+.edui-action-curlyBracket {
+    background-position: -200px 3px;
+}
+.edui-action-encloseLongDivision {
+    background-position: -3427px -26px;
+}
+.edui-action-encloseLongDivision2 {
+    background-position: -3427px -54px;
+}
+.edui-action-hatAccent {
+    background-position: -3168px -33px;
+}
+.edui-action-vectorAccent {
+    background-position: -3121px -26px;
+}
+.edui-action-rightArrowAccent {
+    background-position: -3150px 4px;
+}
+.edui-action-geq {
+    background-position: -247px -35px;
+}
+.edui-action-leq {
+    background-position: -265px -17px;
+}
+.edui-action-isin {
+    background-position: -283px 2px;
+}
+.edui-action-notin3 {
+    background-position: -824px -35px;
+}
+.edui-action-subsetEqual {
+    background-position: -859px 2px;
+}
+.edui-action-subset {
+    background-position: -284px -34px;
+}
+.edui-action-cup {
+    background-position: -301px -15px;
+}
+.edui-action-cap {
+    background-position: -301px -34px;
+}
+.edui-action-comp {
+    background-position: -932px -52px;
+}
+.edui-action-trueIn {
+    background-position: -859px -52px;
+}
+.edui-action-noIn {
+    background-position: -896px -52px
+}
+.edui-action-noIn3 {
+    background-position: -950px -52px;
+}
+.edui-action-ang3 {
+    background-position: -1112px -16px;
+}
+.edui-action-parallel3 {
+    background-position: -1129px 1px;
+}
+.edui-action-bottom3 {
+    background-position: -1130px -16px;
+}
+.edui-action-parallelogram {
+    background-position: -1129px -34px
+}
+.edui-action-because {
+    background-position: -1004px -16px;
+}
+.edui-action-therefore {
+    background-position: -1003px 2px;
+}
+.edui-action-emptyset {
+    background-position: -320px 2px;
+}
+.edui-action-infinity {
+    background-position: -319px -17px;
+}
+.edui-action-numberPi {
+    background-position: -320px -35px;
+}
+.edui-action-plus {
+    background-position: -200px -27px;
+}
+.edui-action-times {
+    background-position: -229px 2px;
+}
+.edui-action-minus {
+    background-position: -229px -15px;
+}
+.edui-action-slash {
+    background-position: -228px -33px;
+}
+.edui-action-plusminus {
+    background-position: -248px 2px;
+}
+.edui-action-div {
+    background-position: -246px -16px;
+}
+.edui-action-negateOperator {
+    background-position: -392px -34px;
+}
+.edui-action-asterisk {
+    background-position: -463px -13px;
+}
+.edui-action-middot {
+    background-position: -464px -33px;
+}
+.edui-action-smallcircle {
+    background-position: -482px -15px;
+}
+.edui-action-backslash {
+    background-position: -412px -16px;
+}
+.edui-action-setminus {
+    background-position: -410px -34px;
+}
+.edui-action-minusplus {
+    background-position: -428px -15px;
+}
+.edui-action-partial {
+    background-position: -519px 2px;
+}
+.edui-action-increment3 {
+    background-position: -517px -34px;
+}
+.edui-action-nabla3 {
+    background-position: -536px 2px;
+}
+.edui-action-degree3 {
+    background-position: -536px -14px;
+}
+.edui-action-apos3 {
+    background-position: -536px -31px;
+}
+.edui-action-aposApos {
+    background-position: -553px 5px;
+}
+.edui-action-backprime {
+    background-position: -481px -31px;
+}
+.edui-action-equal3 {
+    background-position: -590px -16px;
+}
+.edui-action-sim3 {
+    background-position: -590px -34px;
+}
+.edui-action-simeq3 {
+    background-position: -609px -16px;
+}
+.edui-action-congruent3 {
+    background-position: -625px 2px;
+}
+.edui-action-approx3 {
+    background-position: -626px -16px;
+}
+.edui-action-tildeFullEqual3 {
+    background-position: -645px 3px;
+}
+.edui-action-ne3 {
+    background-position: -554px -16px;
+}
+.edui-action-notCongruent3 {
+    background-position: -571px 2px;
+}
+.edui-action-notTilde3 {
+    background-position: -572px -34px;
+}
+.edui-action-greater3 {
+    background-position: -751px -34px;
+}
+.edui-action-geq3 {
+    background-position: -770px -17px;
+}
+.edui-action-geqslant3 {
+    background-position: -788px 1px;
+}
+.edui-action-less3 {
+    background-position: -788px -35px;
+}
+.edui-action-leq3 {
+    background-position: -806px -17px;
+}
+.edui-action-leqslant3 {
+    background-position: -825px 1px;
+}
+.edui-action-lne3 {
+    background-position: -644px -35px;
+}
+.edui-action-gneq3 {
+    background-position: -662px -17px;
+}
+.edui-action-mlt3 {
+    background-position: -680px 2px;
+}
+.edui-action-mgt3 {
+    background-position: -680px -34px;
+}
+.edui-action-propto3 {
+    background-position: -698px -16px;
+}
+.edui-action-precedes {
+    background-position: -716px 2px;
+}
+.edui-action-follows {
+    background-position: -715px -34px;
+}
+.edui-action-leftSubGroup {
+    background-position: -734px -16px;
+}
+.edui-action-rghtSubGroup {
+    background-position: -751px 2px;
+}
+.edui-action-in3 {
+    background-position: -931px -34px;
+}
+.edui-action-ni3 {
+    background-position: -949px -16px;
+}
+.edui-action-cup3 {
+    background-position: -967px 2px;
+}
+.edui-action-cap3 {
+    background-position: -968px -16px;
+}
+.edui-action-subset3 {
+    background-position: -969px -35px;
+}
+.edui-action-supset3 {
+    background-position: -987px -17px;
+}
+.edui-action-trueIn2 {
+    background-position: -877px -52px;
+}
+.edui-action-noIn2 {
+    background-position: -914px -52px;
+}
+.edui-action-noIn4 {
+    background-position: -969px -52px;
+}
+.edui-action-notin3 {
+    background-position: -824px -35px;
+}
+.edui-action-notni3 {
+    background-position:  -842px -16px;
+}
+.edui-action-supersetEqual3 {
+    background-position: -860px -34px;
+}
+.edui-action-sqsub3 {
+    background-position: -878px -16px;
+}
+.edui-action-sqsupset3 {
+    background-position: -896px 2px;
+}
+.edui-action-sqsubseteq3 {
+    background-position: -895px -34px;
+}
+.edui-action-squareSupersetEqual3 {
+    background-position: -914px -16px;
+}
+.edui-action-sqcap3 {
+    background-position: -931px 2px;
+}
+.edui-action-squareUnion3 {
+    background-position: -931px -16px;
+}
+.edui-action-and3 {
+    background-position: -1022px -17px;
+}
+.edui-action-or3 {
+    background-position: -1022px -34px;
+}
+.edui-action-not3 {
+    background-position: -1042px 2px;
+}
+.edui-action-forall3 {
+    background-position: -1041px -16px;
+}
+.edui-action-exists3 {
+    background-position: -1040px -34px;
+}
+.edui-action-notExists3 {
+    background-position: -1058px -16px;
+}
+.edui-action-nparallel3 {
+    background-position: -1076px 2px;
+}
+.edui-action-measuredangle3 {
+    background-position: -1076px -34px;
+}
+.edui-action-angsph3 {
+    background-position: -1094px -16px;
+}
+.edui-action-diamond {
+    background-position: -1113px 3px;
+}
+.edui-action-square3 {
+    background-position: -1147px 2px;
+}
+.edui-action-bigtriangleup3 {
+    background-position: -1148px -16px;
+}
+.edui-action-cir3 {
+    background-position: -1148px -34px;
+}
+.edui-action-oplus3 {
+    background-position: -1183px -16px;
+}
+.edui-action-otimes3 {
+    background-position: -1184px -34px;
+}
+.edui-action-odot {
+    background-position: -1202px 2px;
+}
+.edui-action-ominus {
+    background-position: -1165px 2px;
+}
+.edui-action-ostar {
+    background-position: -1166px -16px;
+}
+.edui-action-odivide {
+    background-position: -1165px -34px;
+}
+.edui-action-bullet {
+    background-position: -1184px 3px;
+}
+.edui-action-leftarrow {
+    background-position: -1382px -34px;
+}
+.edui-action-rightarrow {
+    background-position: -1400px 2px;
+}
+.edui-action-leftrightarrow {
+    background-position: -1400px -16px;
+}
+.edui-action-DoubleLeftArrow {
+    background-position: -1400px -34px;
+}
+.edui-action-DoubleRightArrow {
+    background-position: -1417px 2px;
+}
+.edui-action-DoubleLeftRightArrow {
+    background-position: -1418px -16px;
+}
+.edui-action-leftTeeArrow {
+    background-position: -1418px -33px;
+}
+.edui-action-map {
+    background-position: -1436px 3px;
+}
+.edui-action-rlhar {
+    background-position: -1345px -15px;
+}
+.edui-action-nearr {
+    background-position: -1202px -16px;
+}
+.edui-action-searr {
+    background-position: -1201px -34px;
+}
+.edui-action-larrhk {
+    background-position: -1220px 3px;
+}
+.edui-action-hookrightarrow {
+    background-position: -1219px -15px;
+}
+.edui-action-nwarr {
+    background-position: -1220px -33px;
+}
+.edui-action-swarrow {
+    background-position: -1238px 2px;
+}
+.edui-action-lharu {
+    background-position: -1238px -15px;
+}
+.edui-action-rharu {
+    background-position: -1237px -33px;
+}
+.edui-action-uparrow {
+    background-position: -1256px 2px;
+}
+.edui-action-downArrow {
+    background-position: -1256px -16px;
+}
+.edui-action-upDownArrow {
+    background-position: -1256px -34px;
+}
+.edui-action-doubleUpArrow {
+    background-position: -1274px 2px;
+}
+.edui-action-doubleDownArrow {
+    background-position: -1274px -15px;
+}
+.edui-action-doubleUpDownArrow {
+    background-position: -1273px -34px;
+}
+.edui-action-rghtEquilib {
+    background-position: -1292px 1px;
+}
+.edui-action-lftEquilib {
+    background-position: -1292px -16px;
+}
+.edui-action-CR {
+    background-position: -1293px -33px;
+}
+.edui-action-vellip {
+    background-position: -1436px -16px;
+}
+.edui-action-hellip {
+    background-position: -1436px -36px;
+}
+.edui-action-ctdot {
+    background-position: -1453px 2px;
+}
+.edui-action-utdot {
+    background-position: -1455px -16px;
+}
+.edui-action-dtdot {
+    background-position: -1471px 2px;
+}
+.edui-action-rightArrowWithOverScript {
+    background-position: -1490px 4px;
+}
+.edui-action-leftArrowWithOverScript {
+    background-position: -1519px 4px;
+}
+.edui-action-rightArrowWithUnderScript {
+    background-position: -1547px 2px;
+}
+.edui-action-leftArrowWithUnderScript {
+    background-position: -1577px 1px;
+}
+.edui-action-rightArrowWithUnderAndOverScript {
+    background-position: -1605px 2px;
+}
+.edui-action-leftArrowWithUnderAndOverScript {
+    background-position: -1634px 2px;
+}
+.edui-action-vectorAccent2 {
+    background-position: -1664px 5px;
+}
+.edui-action-rightArrowAccent2 {
+    background-position: -1663px 5px;
+}
+.edui-action-rightLeftArrowAccent2 {
+    background-position: -1693px 4px;
+}
+.edui-action-barAccent2 {
+    background-position: -1721px 4px;
+}
+.edui-action-alpha {
+    background-position: -1751px 1px;
+}
+.edui-action-beta {
+    background-position: -1751px -17px;
+}
+.edui-action-gamma {
+    background-position: -1750px -35px;
+}
+.edui-action-delta {
+    background-position: -1769px 2px;
+}
+.edui-action-epsilon {
+    background-position: -1769px -17px;
+}
+.edui-action-zeta {
+    background-position: -1769px -34px;
+}
+.edui-action-eta {
+    background-position: -1787px 1px;
+}
+.edui-action-theta {
+    background-position: -1787px -16px;
+}
+.edui-action-vartheta {
+    background-position: -1787px -34px;
+}
+.edui-action-iota {
+    background-position: -1805px 2px;
+}
+.edui-action-kappa {
+    background-position: -1805px -16px;
+}
+.edui-action-lambda {
+    background-position: -1804px -34px;
+}
+.edui-action-mu {
+    background-position: -1823px 1px;
+}
+.edui-action-nu {
+    background-position: -1823px -16px;
+}
+.edui-action-xi {
+    background-position: -1823px -34px;
+}
+.edui-action-omicron {
+    background-position: -1841px 1px;
+}
+.edui-action-pi {
+    background-position: -1842px -16px;
+}
+.edui-action-varPiOld {
+    background-position: -1841px -34px;
+}
+.edui-action-rho {
+    background-position: -1859px 1px;
+}
+.edui-action-sigmav {
+    background-position: -1858px -17px;
+}
+.edui-action-sigma {
+    background-position: -1860px -34px;
+}
+.edui-action-tau {
+    background-position: -1876px 2px;
+}
+.edui-action-upsilon {
+    background-position: -1877px -16px;
+}
+.edui-action-phi {
+    background-position: -1877px -35px;
+}
+.edui-action-varphi {
+    background-position: -1895px 1px;
+}
+.edui-action-chi {
+    background-position: -1895px -18px;
+}
+.edui-action-psi {
+    background-position: -1895px -36px;
+}
+.edui-action-omega {
+    background-position: -1913px 2px;
+}
+.edui-action-Alpha {
+    background-position: -1912px -16px;
+}
+.edui-action-Beta {
+    background-position: -1913px -34px;
+}
+.edui-action-Gamma {
+    background-position: -1931px 2px;
+}
+.edui-action-Delta {
+    background-position: -1930px -16px;
+}
+.edui-action-Epsilon {
+    background-position: -1930px -34px;
+}
+.edui-action-Zeta {
+    background-position: -1949px 2px;
+}
+.edui-action-Eta {
+    background-position: -1949px -16px;
+}
+.edui-action-Theta {
+    background-position: -1949px -34px;
+}
+.edui-action-Iota {
+    background-position: -1967px 2px;
+}
+.edui-action-Kappa {
+    background-position: -1967px -16px;
+}
+.edui-action-Lambda {
+    background-position: -1966px -34px;
+}
+.edui-action-Mu {
+    background-position: -1985px 2px;
+}
+.edui-action-Nu {
+    background-position: -1985px -16px;
+}
+.edui-action-Xi {
+    background-position: -1985px -34px;
+}
+.edui-action-Omicron {
+    background-position: -2003px 2px;
+}
+.edui-action-Pi {
+    background-position: -2003px -16px;
+}
+.edui-action-Rho {
+    background-position: -2003px -34px;
+}
+.edui-action-Sigma {
+    background-position: -2021px 2px;
+}
+.edui-action-Tau {
+    background-position: -2021px -16px;
+}
+.edui-action-Upsilon {
+    background-position: -2021px -34px;
+}
+.edui-action-Phi {
+    background-position: -2039px 2px;
+}
+.edui-action-Chi {
+    background-position: -2039px -16px;
+}
+.edui-action-Psi {
+    background-position: -2039px -34px;
+}
+.edui-action-Omega {
+    background-position: -2057px 2px;
+}
+.edui-action-table {
+    background-position: -2166px 3px;
+}
+.edui-action-squareTable {
+    background-position: -2164px -27px;
+}
+.edui-action-verticalLineTable {
+    background-position: -2194px 3px;
+}
+.edui-action-parenthesisTable {
+    background-position: -2194px -28px;
+}
+.edui-action-column {
+    background-position: -2224px 2px;
+}
+.edui-action-row {
+    background-position: -2223px -27px;
+    width: 32px !important;
+}
+.edui-action-squareColumn {
+    background-position: -2252px 2px;
+}
+.edui-action-squareRow {
+    background-position: -2252px -28px;
+}
+.edui-action-parenthesisColumn {
+    background-position: -2281px 2px;
+}
+.edui-action-parenthesisRow {
+    background-position: -2281px -28px;
+}
+.edui-action-lCurlyColumn {
+    background-position: -2308px 3px;
+}
+.edui-action-rCurlyColumn {
+    background-position: -2337px 3px;
+}
+.edui-action-piecewiseFunction {
+    background-position: -2367px 3px;
+}
+.edui-action-equationAlign {
+    background-position: -2397px 2px;
+}
+.edui-action-vellip2 {
+    background-position: -2427px 2px;
+}
+.edui-action-ctdot2 {
+    background-position: -2426px -26px;
+}
+.edui-action-utdot2 {
+    background-position: -2455px 2px;
+}
+.edui-action-dtdot2 {
+    background-position: -2484px 2px;
+}
+.edui-action-smallFraction {
+    background-position: -2514px 2px;
+}
+.edui-action-smallBevelledFraction {
+    background-position: -2513px -26px;
+}
+.edui-action-subsuperscript {
+    background-position: -2545px -26px;
+}
+.edui-action-leftSuperscript {
+    background-position: -2568px -24px;
+}
+.edui-action-leftSubscriptAndSuperscript {
+    background-position: -2597px -26px;
+}
+.edui-action-leftSubscript {
+    background-position: -2627px -28px;
+}
+.edui-action-over {
+    background-position: -2659px -24px;
+}
+.edui-action-underover {
+    background-position: -2688px 2px;
+}
+.edui-action-under {
+    background-position: -2687px -30px;
+}
+.edui-action-underScriptWithBrace {
+    background-position: -2716px 2px;
+}
+.edui-action-overScriptWithBrace {
+    background-position: -2717px -27px;
+}
+.edui-action-bigOpUnderover {
+    background-position: -2745px 3px;
+}
+.edui-action-bigOpUnder {
+    background-position: -2774px 2px;
+}
+.edui-action-bigOpSubsuperscript {
+    background-position: -2803px 3px;
+}
+.edui-action-bigOpSubscript {
+    background-position: -2831px 3px;
+}
+.edui-action-digitSpace {
+    background-position: -2860px 3px;
+}
+.edui-action-backSpace {
+    background-position: -2860px 3px;
+}
+.edui-action-thinnerSpace {
+    background-position: -2890px 2px;
+}
+.edui-action-doubleVerticalBar {
+    background-position: -2978px 3px;
+}
+.edui-action-angleBrackets {
+    background-position: -2977px -26px;
+}
+.edui-action-floor {
+    background-position: -2918px 3px;
+}
+.edui-action-ceiling {
+    background-position: -2918px -26px;
+}
+.edui-action-angleBracketsWithBar {
+    background-position: -2948px 3px;
+}
+.edui-action-upCurlyBracket {
+    background-position: -3006px -24px;
+}
+.edui-action-downCurlyBracket {
+    background-position: -3035px -26px;
+}
+.edui-action-upParenthesis {
+    background-position: -3064px -25px;
+}
+.edui-action-downParenthesis {
+    background-position: -3092px -26px;
+}
+.edui-action-rightLeftArrowAccent {
+    background-position: -3151px -14px;
+}
+.edui-action-barAccent {
+    background-position: -3168px 3px;
+}
+.edui-action-tilde {
+    background-position: -3186px 3px;
+}
+.edui-action-diaeresis {
+    background-position: -3186px -34px;
+}
+.edui-action-dotAccent {
+    background-position: -3204px -15px;
+}
+.edui-action-encloseTop {
+    background-position: -3252px -26px;
+}
+.edui-action-encloseBottom {
+    background-position: -3280px 2px;
+}
+.edui-action-encloseLeft {
+    background-position: -3280px -26px;
+}
+.edui-action-encloseRight {
+    background-position: -3309px -25px;
+}
+.edui-action-encloseBox {
+    background-position: -3339px -26px;
+}
+.edui-action-encloseCircle {
+    background-position: -3367px 2px;
+}
+.edui-action-encloseActuarial {
+    background-position: -3222px 3px;
+}
+.edui-action-encloseRoundedBox {
+    background-position: -3251px 3px;
+}
+.edui-action-upDiagonalStrike {
+    background-position: -3455px -25px;
+}
+.edui-action-downDiagonalStrike {
+    background-position: -3484px -25px;
+}
+.edui-action-horizontalStrike {
+    background-position: -3513px -25px;
+}
+.edui-action-upAndDownDiagonalStrike {
+    background-position: -3541px 3px;
+}
+.edui-action-verticalStrike {
+    background-position: -3368px -27px;
+}
+.edui-action-horizontalAndVerticalStrike {
+    background-position: -3397px -26px;
+}
+.edui-action-sumUnderover {
+    background-position: -3543px -26px;
+}
+.edui-action-sumUnder {
+    background-position: -3570px -27px;
+}
+.edui-action-sumSubsuperscript {
+    background-position: -3601px -28px;
+}
+.edui-action-sumSubscript {
+    background-position: -3630px -27px;
+}
+.edui-action-productUnderover {
+    background-position: -3658px -26px;
+}
+.edui-action-productUnder {
+    background-position: -3687px -27px;
+}
+.edui-action-productSubsuperscript {
+    background-position: -3717px 2px;
+}
+.edui-action-productSubscript {
+    background-position: -3745px 2px;
+}
+.edui-action-bigCap {
+    background-position: -3861px 3px;
+}
+.edui-action-bigCup {
+    background-position: -3860px -26px;
+}
+.edui-action-bigSqCap {
+    background-position: -3774px 3px;
+}
+.edui-action-bigSqCup {
+    background-position: -3774px -26px;
+}
+.edui-action-bigProd {
+    background-position: -3802px 3px;
+}
+.edui-action-bigCoProd {
+    background-position: -3803px -26px;
+}
+.edui-action-bigSum {
+    background-position: -3831px 3px;
+}
+.edui-action-integralSubsuperscript {
+    background-position: -3890px 2px;
+}
+.edui-action-integralSubscript {
+    background-position: -3919px 4px;
+}
+.edui-action-integralSubsuperscriptD {
+    background-position: -3948px 3px;
+}
+.edui-action-integralSubscriptD {
+    background-position: -3978px 2px;
+}
+.edui-action-differentialD {
+    background-position: -4007px 3px;
+}
+.edui-action-partial2 {
+    background-position: -4036px 3px;
+}
+.edui-action-fracDiff {
+    background-position: -4062px 3px;
+}
+.edui-action-fracPartial {
+    background-position: -4092px 3px;
+}
+.edui-action-limitToInfinity {
+    background-position: -4121px 2px;
+}
+.edui-action-limitUnder {
+    background-position: -4151px 2px;
+}
+.edui-action-curl {
+    background-position: -4153px -27px;
+}
+.edui-action-divergence {
+    background-position: -4181px -27px;
+}
+.edui-action-gradient {
+    background-position: -4210px -26px;
+}
+.edui-action-laplacian {
+    background-position: -4239px -26px;
+}
+.edui-action-integral {
+    background-position: -4326px -29px;
+}
+.edui-action-integralContour {
+    background-position: -4354px -29px;
+}
+.edui-action-integralDouble {
+    background-position: -4383px -29px;
+}
+.edui-action-integralDoubleContour {
+    background-position: -4412px -29px;
+}
+.edui-action-iiint {
+    background-position: -4268px -29px;
+}
+.edui-action-cconint {
+    background-position: -4297px -29px;
+}
+.edui-action-sinus {
+    background-position: -4586px 3px;
+}
+.edui-action-cosinus {
+    background-position: -4587px -26px;
+}
+.edui-action-tangent {
+    background-position: -4614px 3px;
+}
+.edui-action-log {
+    background-position: -4615px -27px;
+}
+.edui-action-nlog {
+    background-position: -4643px 3px;
+}
+.edui-action-naturalLog {
+    background-position: -4672px 4px;
+}
+.edui-action-cosecant {
+    background-position: -4440px -29px;
+}
+.edui-action-secant {
+    background-position: -4469px 1px;
+}
+.edui-action-cotangent {
+    background-position: -4469px -27px;
+}
+.edui-action-arcsinus {
+    background-position: -4497px 2px;
+}
+.edui-action-arccosinus {
+    background-position: -4528px 1px;
+    width: 32px !important;
+}
+.edui-action-arctangent {
+    background-position: -4558px 1px
+}
+.edui-action-alignLeft {
+    background-position: -4806px 2px;
+}
+.edui-action-alignCenter {
+    background-position: -4806px -16px;
+}
+.edui-action-alignRight {
+    background-position: -4807px -34px;
+}
+.edui-action-appendRow {
+    background-position: -4825px 3px;
+}
+.edui-action-prependRow {
+    background-position: -4825px -17px;
+}
+.edui-action-appendColumn {
+    background-position: -4826px -35px;
+}
+.edui-action-prependColumn {
+    background-position: -4844px 1px;
+}
+.edui-action-removeRow {
+    background-position: -4844px -17px;
+}
+.edui-action-removeColumn {
+    background-position: -4844px -34px;
+}
+.edui-action-addFrame {
+    background-position: -4861px 2px;
+}
+.edui-action-removeFrame {
+    background-position: -4862px -16px;
+}
+.edui-action-matrixSolidLine {
+    background-position: -4861px -35px;
+}
+.edui-action-addLineBelow {
+    background-position: -4879px 1px;
+}
+.edui-action-addLineRight {
+    background-position: -4879px -16px;
+}
+.edui-action-matrixDashLine {
+    background-position: -4878px -35px;
+}
+.edui-action-removeLineBelow {
+    background-position: -4898px 2px;
+}
+.edui-action-removeLineRight {
+    background-position: -4897px -16px;
+}
+.edui-action-equalRowHeight {
+    background-position: -4935px -17px;
+}
+.edui-action-equalColWidth {
+    background-position: -4935px -35px;
+}
+
+.edui-action-shortDiv {
+    background-image: url(../images/short_div.png);
+      background-position: -32px 0px;
+}
+
+.edui-action-shortDiv1 {
+    background-image: url(../images/short_div.png);
+      background-position: 0px 0px;
+}
+
+.edui-fullformula-contextPanel {
+    display: none;
+    z-index: 3;
+    position: absolute;
+    font-weight: bold;
+    font-size: 11px;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.06);
+}
+
+.edui-fullformula-matrixButtonPanel {
+    background: #F9F9F9;
+    color: #7F7F7F;
+    border: 1px solid #DCDCDC;
+    padding: 1px;
+}
+
+.edui-fullformula-matrixButtonPanel table {
+    border-spacing: 1px;
+    border-collapse: separate;
+    width: 109px;
+}
+
+.edui-fullformula-matrixButtonPanel .edui-fullformula-matrixButton.edui-fullformula-selected {
+    background: #D0D0D0;
+}
+
+.edui-fullformula-matrixButtonPanel .edui-fullformula-matrixButton {
+    width: 13px;
+    height: 13px;
+    border: 1px solid #B7B7B7;
+    cursor: pointer;
+    background: #fff;
+}
+
+.edui-fullformula-matrixButtonPanel .edui-fullformula-inputCell {
+    text-align: right;
+}
+
+.edui-fullformula-matrixButtonPanel input {
+    margin-left: 0;
+    width: 47px;
+    text-align: right;
+    border: 1px solid #b1b3b4;
+    padding: 1px;
+}
+
+.edui-action-add {
+    display: inline-block;
+    background: rgba(242, 242, 242, 0.25);
+    line-height: 55px;
+    font-size: 75px;
+    text-align: center;
+    text-decoration: none;
+    outline: dashed rgba(176, 187, 180, 0.26);
+    margin: 1px;
+    color: rgb(218, 218, 218);
+    transition: all .5s ease;
+}
+
+.edui-action-add:hover, .edui-action-add:focus {
+    outline: dashed rgba(4, 255, 95, 1);
+    color: rgb(0, 202, 49);
+    text-decoration: none;
+    box-shadow: -1px -1px 4px 4px rgb(0, 255, 61);
+}
+.edui-user-define {
+    display: inline-block;
+    margin-left: 15px;
+    border: dashed 1px rgb(6, 255, 0);
+    cursor: pointer;
+    top: -9px;
+    position: relative;
+    min-height: 55px;
+    transition: all .2s ease;
+    margin-top: 10px;
+}
+.edui-define-remove{
+    display: block;
+    font-size: 3px;
+    background: rebeccapurple;
+    text-align: center;
+    height: 15px;
+    top: -5px;
+    position: relative;
+    width: 20px;
+}
+
+.edui-define-name{
+    width: 100%;
+    height: 29px;
+    font-size: 20px;
+    color: rgb(0,199,18);
+    border: 1px solid;
+}
+
+.edui-user-define:hover{
+    border: none;
+    box-shadow: 0px 0px 3px 2px rgb(84, 255, 0);
+}
+
+.edui-formula-active{
+    border: 1px solid rgb(68, 205, 46);
+    box-shadow: 0px 0px 3px 0px rgb(0, 255, 23);
+}
+
+.edui-math-editor{
+    margin-right: 2px;
+}
+
+.edui-mark-s{
+    margin-right: 2px; 
+    display: inline-block;
+    min-height: 2px;
+    min-width: 2px;
+}
+
+.edui-help-update{
+    width: 500px;
+    height: 400px;
+    z-index: 999;
+    position: absolute;
+    outline: solid 1px green;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 2px 2px green;
+}
+
+.edui-help-update-description{
+    margin-left: 30px;
+}
+
+.edui-help-tips{
+    width: 49%;
+    height: 50px;
+    display: inline-block;
+    text-align: center;
+    background: rgb(236, 253, 240);
+    font-size: 20px;
+    line-height: 50px;
+    text-decoration: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.update-tips{
+    border-right: dashed 5px; 
+    margin-left: 2px;
+}
+.edui-help-tips:hover{
+    background: green;
+    bottom: 0;
+    color: #fff;
+    text-decoration: none;
+}
+.edui-help-update-close{
+    position: absolute;
+    outline: none;
+    width: 100%;
+    left: 0;
+    height: 25%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    text-align: center;
+    font-size: 20px;
+    color: rgb(0, 229, 38);
+    margin-top: 30px;
+    transition: all .5s linear;
+}
+.edui-help-update-close:hover{
+    background: green;
+    bottom: 0;
+}
+
+.edui-define-add-ok{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 9999;
+    display: block;
+    height: 20px;
+    background: rgb(207, 240, 220);
+    color: rgb(28, 171, 28);
+    font-size: medium;
+    box-shadow: 1px 1px 1px 1px;
+}
+/*::-webkit-scrollbar {
+    border: 1px solid red;
+    }       /*滚动条整体部分，其中的属性有width,height,background,border（就和一个块级元素一样）等。*/
+/*::-webkit-scrollbar-button{
+    display: none;
+    }      滚动条两端的按钮。可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果。
+::-webkit-scrollbar-track {
+    display: none;
+    }   */     /*外层轨道。可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果。*/
+/*::-webkit-scrollbar-track-piece        内层轨道，滚动条中间部分（除去）。*/
+/*::-webkit-scrollbar-thumb               滚动条里面可以拖动的那部分*/
+/*::-webkit-scrollbar-corner               边角*/
+/*::-webkit-resizer */      

@@ -1,0 +1,33 @@
+com.wiris.editor.EditorModelInterface = v91["com.wiris.editor.EditorModelInterface"] = function() {};
+com.wiris.editor.EditorModelInterface.__name__ = ["com", "wiris", "editor", "EditorModelInterface"];
+com.wiris.editor.EditorModelInterface.prototype = {
+	getTopEditorBox: null,
+	getCurrentEditorBox: null,
+	addValidator: null,
+	getTransformation: null,
+	setEmptyScriptBoxColor: null,
+	getEmptyScriptBoxColor: null,
+	setEmptyBoxColor: null,
+	getEmptyBoxColor: null,
+	isReady: null,
+	getCurrentStyles: null,
+	setSelectionStyles: null,
+	getDesiredDefaultStyles: null,
+	getDefaultStyles: null,
+	setDefaultStyles: null,
+	getCaretLength: null,
+	getCaret: null,
+	insertMathML: null,
+	setMathML: null,
+	reset: null,
+	isFormulaEmpty: null,
+	getMathML: null,
+	getFormulaWidth: null,
+	getFormulaHeight: null,
+	getFormulaBaseline: null,
+	removeEditorListener: null,
+	addEditorListener: null,
+	actionWithParam: null,
+	action: null,
+	__class__: com.wiris.editor.EditorModelInterface
+};

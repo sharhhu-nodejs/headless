@@ -1,0 +1,1 @@
+if (!com.wiris.util) com.wiris.util = {};

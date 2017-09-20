@@ -1,0 +1,61 @@
+@font-face {
+    font-family: 'Conv_a';
+    src: url('/v1/formula/resources/fonts/a.eot');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Conv_math1RTL';
+    src: url('/v1/formula/resources/fonts/math1_rtl.eot');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Conv_math1';
+    src: url('/v1/formula/resources/fonts/math1.eot');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Conv_horizontal';
+    src: url('/v1/formula/resources/fonts/horizontal.eot');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Conv_brackets';
+    src: url('/v1/formula/resources/fonts/brackets.eot');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Conv_brack_sm';
+    src: url('/v1/formula/resources/fonts/brack_sm.eot');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.wrs_aChar {
+    /* Text with a font */
+    font-family:'Conv_a';
+}
+.wrs_mathChar {
+    /* Text with math font */
+    font-family:'Conv_math1';
+}
+.wrs_mathRTLChar {
+    /* Text with math font */
+    font-family:'Conv_math1RTL';
+}
+.wrs_horizontalChar {
+    /* Text with horizontal font */
+    font-family:'Conv_horizontal';
+}
+.wrs_specialChar {
+    /* Text with special font */
+    font-family:'Conv_brackets';
+}
+.wrs_specialSmallChar{
+    /* Text with special small font */
+    font-family:'Conv_brack_sm';
+}
