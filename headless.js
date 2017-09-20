@@ -4,7 +4,7 @@ const fs = require('fs');
 
 
 const opt = {
-	headless: true,
+	headless: false,
 	dumpio: true
 };
 

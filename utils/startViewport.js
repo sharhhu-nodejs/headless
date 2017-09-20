@@ -11,6 +11,15 @@ const config = require('../config/config.js');
 
 let autoName = 1;
 
+function sleep(timeout){
+	var promise = new Promise((resolve, reject) => {
+		setTimeout(function(){
+			resolve();
+		}, timeout);
+	});
+	return promise;
+}
+
 async function getPage(browser){
 
 	let page;
@@ -132,13 +141,13 @@ async function startViewPort(browser, viewports, mjson){
 
 		let loadStartTime = Date.now();
 		logger.getLogger('pageInfo').info(`load start ${Date.now()}`);
-		console.time('loadingPage');
 		console.log('load listener');
 		page.on('load', async function(){
-			console.timeEnd('loadingPage');
 			console.log('load event');
+			var time = Date.now() - loadStartTime;
+			console.log('time load: ', time);
 			logger.getLogger('pageInfo').info(`load end ${Date.now()}.
-				custom time: ${Date.now() - loadStartTime}
+				custom time: ${time}
 			`);
 		});
 		// set viewport
@@ -157,7 +166,12 @@ async function startViewPort(browser, viewports, mjson){
 				screenshots: true
 			});
 		}
-		await page.goto(viewport.url || mjson.url);
+		try{
+			await page.goto(viewport.url || mjson.url);
+		}catch(e){
+			await page.close();
+			throw e;
+		}
 
 		var beforePath = `screenshots/page-beforeDoAction-${Date.now()}.png`;
 		viewportStep.steps.push({
@@ -169,11 +183,22 @@ async function startViewPort(browser, viewports, mjson){
 			fullPage: true,
 			path: path.resolve(__dirname, '../public', beforePath)
 		});
+		try{
+			console.log('mjson.actions start');
+			let steps = await doAction(page, viewport.actions || mjson.actions, path.resolve(__dirname, '../public'));
+			viewportStep.steps = viewportStep.steps.concat(steps);
+			console.log('mjson.actions end');
+		}catch(e){
+			// 防止tracing在下次启动的时候报错
+			await page.tracing.stop();
+			await page.close();
+			console.error(e);
+			throw e;
+		}
 
-		console.log('mjson.actions start');
-		let steps = await doAction(page, viewport.actions || mjson.actions, path.resolve(__dirname, '../public'));
-		viewportStep.steps = viewportStep.steps.concat(steps);
-		console.log('mjson.actions end');
+		if(mjson.waitForClose){
+			await sleep(mjson.waitForClose);
+		}
 
 		var afterPath = `screenshots/page-afterDoAction-${Date.now()}.png`;
 		viewportStep.steps.push({

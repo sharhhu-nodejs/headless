@@ -233,6 +233,7 @@ module.exports = [
   },
   {
     'name': 'iPhone 4',
+    'alias': 'iphone4',
     'userAgent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
     'viewport': {
       'width': 320,
@@ -245,6 +246,7 @@ module.exports = [
   },
   {
     'name': 'iPhone 4 landscape',
+    'alias': 'iphone4 landscape',
     'userAgent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
     'viewport': {
       'width': 480,
@@ -257,6 +259,7 @@ module.exports = [
   },
   {
     'name': 'iPhone 5',
+    'alias': 'iphone5',
     'userAgent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
     'viewport': {
       'width': 320,
@@ -269,6 +272,7 @@ module.exports = [
   },
   {
     'name': 'iPhone 5 landscape',
+    'alias': 'iphone5 landscape',
     'userAgent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
     'viewport': {
       'width': 568,
@@ -281,6 +285,7 @@ module.exports = [
   },
   {
     'name': 'iPhone 6',
+    'alias': 'iphone6',
     'userAgent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
     'viewport': {
       'width': 375,
@@ -293,6 +298,7 @@ module.exports = [
   },
   {
     'name': 'iPhone 6 landscape',
+    'alias': 'iphone6 landscape',
     'userAgent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
     'viewport': {
       'width': 667,
@@ -305,6 +311,7 @@ module.exports = [
   },
   {
     'name': 'iPhone 6 Plus',
+    'alias': 'iphone6 plus',
     'userAgent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
     'viewport': {
       'width': 414,
@@ -317,6 +324,7 @@ module.exports = [
   },
   {
     'name': 'iPhone 6 Plus landscape',
+    'alias': 'iphone6 plus landscape',
     'userAgent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
     'viewport': {
       'width': 736,

@@ -39,7 +39,12 @@ class ElementActions extends Action {
 				for(let el of elements){
 					console.log(`do element action: ${action.name}`);
 					await this.doScreenshot(`element.${action.name}.before`, `screenshots/${action.name}-before-${Date.now()}.png`, action.arguments, selector);
-					await el[action.name](action.arguments);
+					if(action.name === 'uploadFile'){
+						console.log(el[action.name], action.arguments)
+						await el[action.name](...action.arguments);
+					}else{
+						await el[action.name](action.arguments);
+					}
 					await this.doScreenshot(`element.${action.name}.after`, `screenshots/${action.name}-after-${Date.now()}.png`, action.arguments, selector);
 					await this.sleep(this.actionSleepTime);
 				}

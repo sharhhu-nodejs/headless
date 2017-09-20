@@ -53,6 +53,7 @@ class PageAction extends Action {
 			if(action.delay){
 				arg.delay = action.delay;
 			}
+			console.log(action, 'type');
 			await this.doScreenshot('page.type.before', `screenshots/type-start-${Date.now()}.png`, arg);
 			await this.page.type(action.text, arg);
 			await this.doScreenshot('page.type.after', `screenshots/type-after-${Date.now()}.png`, arg);
@@ -63,7 +64,8 @@ class PageAction extends Action {
 		for(let action of actions){
 			console.log(`do page action: press`);
 			await this.doScreenshot('page.press.before', `screenshots/press-before-${Date.now()}.png`, {});
-			await this.page.press(action);
+			console.log(action, 'press');
+			await this.page.press(action.key, action);
 			await this.doScreenshot('page.press.after', `screenshots/press-after-${Date.now()}.png`, {});
 			await this.sleep(this.actionSleepTime);
 		}
@@ -73,6 +75,7 @@ class PageAction extends Action {
 			for(let arg of action.arguments){
 				console.log(`do page action: keyboard-${action.name}`);
 				await this.doScreenshot(`page.keyboard.${action.name}.before`, `screenshots/keyboard-before-${Date.now()}.png`, arg);
+				console.log(action, arg, 'keyboard');
 				await this.page.keyboard[action.name](arg);
 				await this.doScreenshot(`page.keyboard.${action.name}.after`, `screenshots/keyboard-after-${Date.now()}.png`, arg);
 				await this.sleep(this.actionSleepTime);

@@ -12,7 +12,7 @@ var ElementAction = require('../elementActions.js');
 
 module.exports = async function(page, actions, publicPath){
 	let steps = [];
-	console.log(steps, 'doActions start');
+	console.log(steps,actions, 'doActions start');
 	for(let action of actions){
 		switch(action.name){
 			case 'page':

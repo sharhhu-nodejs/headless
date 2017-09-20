@@ -9,7 +9,7 @@ module.exports = [{
 			requireds: [{
 				name: 'selector',
 				type: String,
-				desc: 'dom选择器，用于page.$'
+				desc: 'dom选择器，用于$'
 			}],
 			optionals: [{
 				name: 'options',
@@ -19,12 +19,40 @@ module.exports = [{
 			}]
 		},
 		{
+			name: 'type',
+			desc: '输入事件',
+			requireds: [{
+				name: 'text',
+				type: String,
+				desc: '输入的文字'
+			}],
+			optionals: [{
+				name: 'options',
+				type: Object,
+				desc: '选项，用于type函数',
+				keys: ["delay"]
+			}]
+		},
+		{
+			name: 'press',
+			desc: '输入事件',
+			requireds: [{
+				name: 'key',
+				type: String,
+				desc: '输入的keyCode'
+			}],
+			optionals: [{
+				name: 'options',
+				keys: ['text', 'delay']
+			}]
+		},
+		{
 			name: 'focus',
 			desc: '激活一个元素',
 			requireds: [{
 				name: 'selector',
 				type: String,
-				desc: 'dom选择器，用于page.$'
+				desc: 'dom选择器，用于$'
 			}]
 		},
 		{
@@ -33,7 +61,16 @@ module.exports = [{
 			requireds: [{
 				name: 'selector',
 				type: String,
-				desc: 'dom选择器，用于page.$'
+				desc: 'dom选择器，用于$'
+			}]
+		}, 
+		{
+			name: 'tap',
+			desc: 'tap函数',
+			requireds: [{
+				name: 'selector',
+				type: String,
+				desc: 'dom选择器，用于$'
 			}]
 		}, 
 		{

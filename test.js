@@ -32,31 +32,28 @@ module.exports = {
 			isLandscape: false
 		},
 		"actions":[
-			// {
-			// 	"name": "element",
-			// 	"selectors":[{
-			// 		"selector": "input",
-			// 		"actions": [
-			// 			{
-			// 				"name": "click",
-			// 				"arguments": {
-			// 					"button": "middle",
-			// 					"clickCount": 1,
-			// 					"delay": 100
-			// 				}
-			// 			},{
-			// 				"name": "dispose",
-			// 				"arguments": {}
-			// 			},{
-			// 				"name": "hover",
-			// 				"arguments": {}
-			// 			},{
-			// 				"name": "tap",
-			// 				"arguments": {}
-			// 			}
-			// 		]
-			// 	}]
-			// },
+			{
+				"name": "element",
+				"selectors":[{
+					"selector": "input",
+					"actions": [
+						{
+							"name": "click",
+							"arguments": {
+								"button": "middle",
+								"clickCount": 1,
+								"delay": 100
+							}
+						},{
+							"name": "hover",
+							"arguments": {}
+						},{
+							"name": "tap",
+							"arguments": {}
+						}
+					]
+				}]
+			},
 			{
 				"name": "page",
 				"actions":[
@@ -64,7 +61,7 @@ module.exports = {
 						"name": "type",
 						"actions": [{
 							"text": "123333333333",
-							// "delay": 100
+							"delay": 100
 						}]
 					},
 					{
@@ -73,60 +70,60 @@ module.exports = {
 							"selector": "#su"
 						}]
 					},
-					// {
-					// 	"name": "press",
-					// 	"actions": [{
-					// 		"text": "a",
-					// 		"delay": 100
-					// 	}]
-					// },
-					// {
-					// 	"name": "keyboard",
-					// 	"actions": [{
-					// 		"name": "down",
-					// 		"arguments": ["a", "b"]
-					// 	},{
-					// 		"name": "up",
-					// 		"arguments": ["a", "b"]
-					// 	},{
-					// 		"name": "sendCharacter",
-					// 		"arguments": ["a", "b"]
-					// 	}]
-					// },
-					// {
-					// 	"name": "mouse",
-					// 	"actions": [{
-					// 		"name": "click",
-					// 		"arguments": [1, 100, {
-					// 			"button": "middle",
-					// 			"clickCount": 1,
-					// 			"delay": 2
-					// 		}]
-					// 	},{
-					// 		"name": "up",
-					// 		"arguments": [1, 100, {
-					// 			"button": "middle",
-					// 			"clickCount": 1,
-					// 		}]
-					// 	},{
-					// 		"name": "move",
-					// 		"arguments": [1, 100, {
-					// 			"steps ": 5
-					// 		}]
-					// 	},{
-					// 		"name": "down",
-					// 		"arguments": [1, 100, {
-					// 			"steps ": 5
-					// 		}]
-					// 	}]
-					// },
-					// {
-					// 	"name": "touchscreen",
-					// 	"actions": [{
-					// 		"name": "tap",
-					// 		"arguments": [1, 2]
-					// 	}]
-					// }
+					{
+						"name": "press",
+						"actions": [{
+							"text": "a",
+							"delay": 100
+						}]
+					},
+					{
+						"name": "keyboard",
+						"actions": [{
+							"name": "down",
+							"arguments": ["a", "b"]
+						},{
+							"name": "up",
+							"arguments": ["a", "b"]
+						},{
+							"name": "sendCharacter",
+							"arguments": ["a", "b"]
+						}]
+					},
+					{
+						"name": "mouse",
+						"actions": [{
+							"name": "click",
+							"arguments": [1, 100, {
+								"button": "middle",
+								"clickCount": 1,
+								"delay": 2
+							}]
+						},{
+							"name": "up",
+							"arguments": [1, 100, {
+								"button": "middle",
+								"clickCount": 1,
+							}]
+						},{
+							"name": "move",
+							"arguments": [1, 100, {
+								"steps ": 5
+							}]
+						},{
+							"name": "down",
+							"arguments": [1, 100, {
+								"steps ": 5
+							}]
+						}]
+					},
+					{
+						"name": "touchscreen",
+						"actions": [{
+							"name": "tap",
+							"arguments": [1, 2]
+						}]
+					}
 				]
 			},
 			{
@@ -139,7 +136,7 @@ module.exports = {
 							"arguments": {
 								"button": "middle",
 								"clickCount": 1,
-								// "delay": 100
+								"delay": 100
 							}
 						}
 					]
@@ -158,31 +155,28 @@ module.exports = {
 		},
 	}],
 	"actions":[
-		// {
-		// 	"name": "element",
-		// 	"selectors":[{
-		// 		"selector": "input",
-		// 		"actions": [
-		// 			{
-		// 				"name": "click",
-		// 				"arguments": {
-		// 					"button": "middle",
-		// 					"clickCount": 1,
-		// 					"delay": 100
-		// 				}
-		// 			},{
-		// 				"name": "dispose",
-		// 				"arguments": {}
-		// 			},{
-		// 				"name": "hover",
-		// 				"arguments": {}
-		// 			},{
-		// 				"name": "tap",
-		// 				"arguments": {}
-		// 			}
-		// 		]
-		// 	}]
-		// },
+		{
+			"name": "element",
+			"selectors":[{
+				"selector": "input",
+				"actions": [
+					{
+						"name": "click",
+						"arguments": {
+							"button": "middle",
+							"clickCount": 1,
+							"delay": 100
+						}
+					},{
+						"name": "hover",
+						"arguments": {}
+					},{
+						"name": "tap",
+						"arguments": {}
+					}
+				]
+			}]
+		},
 		{
 			"name": "page",
 			"actions":[
@@ -190,7 +184,7 @@ module.exports = {
 					"name": "type",
 					"actions": [{
 						"text": "123333333333",
-						// "delay": 100
+						"delay": 100
 					}]
 				},
 				{
@@ -199,60 +193,61 @@ module.exports = {
 						"selector": "#su"
 					}]
 				},
-				// {
-				// 	"name": "press",
-				// 	"actions": [{
-				// 		"text": "a",
-				// 		"delay": 100
-				// 	}]
-				// },
-				// {
-				// 	"name": "keyboard",
-				// 	"actions": [{
-				// 		"name": "down",
-				// 		"arguments": ["a", "b"]
-				// 	},{
-				// 		"name": "up",
-				// 		"arguments": ["a", "b"]
-				// 	},{
-				// 		"name": "sendCharacter",
-				// 		"arguments": ["a", "b"]
-				// 	}]
-				// },
-				// {
-				// 	"name": "mouse",
-				// 	"actions": [{
-				// 		"name": "click",
-				// 		"arguments": [1, 100, {
-				// 			"button": "middle",
-				// 			"clickCount": 1,
-				// 			"delay": 2
-				// 		}]
-				// 	},{
-				// 		"name": "up",
-				// 		"arguments": [1, 100, {
-				// 			"button": "middle",
-				// 			"clickCount": 1,
-				// 		}]
-				// 	},{
-				// 		"name": "move",
-				// 		"arguments": [1, 100, {
-				// 			"steps ": 5
-				// 		}]
-				// 	},{
-				// 		"name": "down",
-				// 		"arguments": [1, 100, {
-				// 			"steps ": 5
-				// 		}]
-				// 	}]
-				// },
-				// {
-				// 	"name": "touchscreen",
-				// 	"actions": [{
-				// 		"name": "tap",
-				// 		"arguments": [1, 2]
-				// 	}]
-				// }
+				{
+					"name": "press",
+					"actions": [{
+						"key": '123',
+						"text": "a",
+						"delay": 100
+					}]
+				},
+				{
+					"name": "keyboard",
+					"actions": [{
+						"name": "down",
+						"arguments": ["a", "b"]
+					},{
+						"name": "up",
+						"arguments": ["a", "b"]
+					},{
+						"name": "sendCharacter",
+						"arguments": ["a", "b"]
+					}]
+				},
+				{
+					"name": "mouse",
+					"actions": [{
+						"name": "click",
+						"arguments": [1, 100, {
+							"button": "middle",
+							"clickCount": 1,
+							"delay": 2
+						}]
+					},{
+						"name": "up",
+						"arguments": [1, 100, {
+							"button": "middle",
+							"clickCount": 1,
+						}]
+					},{
+						"name": "move",
+						"arguments": [1, 100, {
+							"steps ": 5
+						}]
+					},{
+						"name": "down",
+						"arguments": [1, 100, {
+							"steps ": 5
+						}]
+					}]
+				},
+				{
+					"name": "touchscreen",
+					"actions": [{
+						"name": "tap",
+						"arguments": [1, 2]
+					}]
+				}
 			]
 		},
 		{
@@ -265,24 +260,12 @@ module.exports = {
 						"arguments": {
 							"button": "middle",
 							"clickCount": 1,
-							// "delay": 100
+							"delay": 100
 						}
 					}
 				]
 			}]
 		}
-	],
-	"waitForNavigation":{
-		"timeout": 30000,
-		"waitUntil": "load",
-		"networkIdleTimeout": 2000
-	},
-	"waitForSelector": {
-		"selector": "img",
-		"arguments": {
-			"visible": true,
-			"timeout": 30000
-		}
-	}
+	]
 
 }
