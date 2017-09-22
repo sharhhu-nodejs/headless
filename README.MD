@@ -24,3 +24,31 @@
     测试详细记录文件`test-list`、
     timeline性能`trace`、
     上传的文件`uploads`
+  
+# 开始
+
+> 安装依赖
+```bash
+npm i
+//or
+cnpm i
+//or
+yarn install 
+```
+
+> 启动服务器
+
+```bash
+node server.js
+
+```
+
+> 启动客服端
+```bash
+cd client
+
+npm i
+//启动客服端开发模式
+npm run dev
+
+```
