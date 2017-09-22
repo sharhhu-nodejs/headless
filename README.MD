@@ -1,5 +1,13 @@
 # 关于
 
+> 说明
+
+本项目是基于`puppeteer`的`headless chrome`自动化测试。
+
+将`puppeteer`的部分[api](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#)封装，基于`koa2`的服务器模式，通过
+
+`vue`、`iview`、`webpack`构建的后台系统进行配置，生成web页面自动化。
+
 > 目录结构
 
 1、`server.js`服务器文件，简单的koa服务器
