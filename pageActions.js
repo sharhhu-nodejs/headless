@@ -18,6 +18,7 @@ class PageAction extends Action {
 		this.actionSleepTime = 1000;
 	}
 
+
 	async doScreenshot(actionName, screenshotName, args, selector){
 
 		this.steps.push({
@@ -30,6 +31,40 @@ class PageAction extends Action {
 			fullPage: true,
 			path: path.join(this.screenshotRoot, screenshotName)
 	});
+	}
+	async doEvaluate(actions){
+		for(let action of actions){
+			console.log(`do page action: evaluate`);
+			await this.doScreenshot('page.evaluate.before', `screenshots/evaluate-start-${Date.now()}.png`);
+			await this.page.evaluate(action.string);
+			await this.doScreenshot('page.evaluate.after', `screenshots/evaluate-after-${Date.now()}.png`);
+			await this.sleep(this.actionSleepTime);
+		}
+	}
+	async doExposeFunction(actions){
+		for(let action of actions){
+			console.log(`do page action: exposeFunction`);
+			await this.doScreenshot('page.exposeFunction.before', `screenshots/exposeFunction-start-${Date.now()}.png`);
+			await this.page.exposeFunction(action.name, ()=>{
+				return action.value;
+			});
+			await this.doScreenshot('page.exposeFunction.after', `screenshots/exposeFunction-after-${Date.now()}.png`);
+			await this.sleep(this.actionSleepTime);
+		}
+	}
+
+	async doWaitFor(actions){
+		for(let action of actions){
+			console.log(`do page action: waitFor`);
+			await this.doScreenshot('page.waitFor.before', `screenshots/waitFor-start-${Date.now()}.png`);
+			if(isNaN(Number(action.timeoutOrSelector))){
+				await this.page.waitFor(action.timeoutOrSelector, action.options);
+			}else{
+				await this.page.waitFor(parseInt(action.timeoutOrSelector), action.options);
+			}
+			await this.doScreenshot('page.waitFor.after', `screenshots/waitFor-after-${Date.now()}.png`);
+			await this.sleep(this.actionSleepTime);
+		}
 	}
 
 	async doClick(actions){
@@ -102,9 +137,52 @@ class PageAction extends Action {
 			await this.sleep(this.actionSleepTime);
 		}
 	}
+	async doFocus(actions){
+		for(let action of actions){
+			console.log(`do page action: focus-${action.selector}`);
+			await this.doScreenshot(`page.focus.${action.selector}.before`, `screenshots/touchscreen-before-${Date.now()}.png`, action.arguments);
+			await this.page.focus(action.selector);
+			await this.doScreenshot(`page.focus.${action.selector}.after`, `screenshots/touchscreen-after-${Date.now()}.png`, action.arguments);
+			await this.sleep(this.actionSleepTime);
+		}
+	}
+	async doTap(actions){
+		for(let action of actions){
+			console.log(`do page action: tap-${action.selector}`);
+			await this.doScreenshot(`page.tap.${action.selector}.before`, `screenshots/touchscreen-before-${Date.now()}.png`, action.arguments);
+			await this.page.tap(action.selector);
+			await this.doScreenshot(`page.tap.${action.selector}.after`, `screenshots/touchscreen-after-${Date.now()}.png`, action.arguments);
+			await this.sleep(this.actionSleepTime);
+		}
+	}
+	async doHover(actions){
+		for(let action of actions){
+			console.log(`do page action: hover-${action.selector}`);
+			await this.doScreenshot(`page.hover.${action.selector}.before`, `screenshots/touchscreen-before-${Date.now()}.png`, action.arguments);
+			await this.page.hover(action.selector);
+			await this.doScreenshot(`page.hover.${action.selector}.after`, `screenshots/touchscreen-after-${Date.now()}.png`, action.arguments);
+			await this.sleep(this.actionSleepTime);
+		}
+	}
 	async init() {
 		for(let action of this.action.actions){
 			switch(action.name){
+				case 'evaluate':
+					console.log(`do page action: exposeFunction`);
+					await this.doEvaluate(action.actions);
+					break;
+				case 'exposeFunction':
+					console.log(`do page action: exposeFunction`);
+					await this.doExposeFunction(action.actions);
+					break;
+				case 'waitFor':
+					console.log(`do page action: waitFor`);
+					await this.doWaitFor(action.actions);
+					break;
+				case 'click':
+					console.log(`do page action: click`);
+					await this.doClick(action.actions);
+					break;
 				case 'type':
 					console.log(`do page action: type`);
 					await this.doType(action.actions);
@@ -113,13 +191,21 @@ class PageAction extends Action {
 					console.log(`do page action: press`);
 					await this.doPress(action.actions);
 					break;
+				case 'focus':
+					console.log('do page action focus');
+					await this.doFocus(action.actions);
+					break;
+				case 'hover':
+					console.log('do page action hover');
+					await this.doHover(action.actions);
+					break;
+				case 'tap':
+					console.log('do page action tap');
+					await this.doTap(action.actions);
+					break;
 				case 'keyboard':
 					console.log(`do page action: keyboard`);
 					await this.doKeyboard(action.actions);
-					break;
-				case 'click':
-					console.log(`do page action: click`);
-					await this.doClick(action.actions);
 					break;
 				case 'mouse':
 					console.log(`do page action: mouse`);

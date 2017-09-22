@@ -4,7 +4,7 @@
 	        <div class="swiper-wrapper">
 	            <div class="swiper-slide p-swiper-slide" v-for="viewport in viewports">
 	            	<Card :bordered="true">
-	            		<p slot="title" class="step-title">viewport: {{viewport.name}}</p>
+	            		<p slot="title" class="step-title">视窗: {{viewport.name}}</p>
 						<div class="sub-swiper swiper-container">
 							<div class="swiper-wrapper">
 								<div class="swiper-slide" v-for="step in viewport.steps">

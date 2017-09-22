@@ -1,6 +1,9 @@
 <template>
 	<div>
 		<div style="text-align: right;padding: 5px 20px;">
+			<Select v-model="selectedHistory" clearable v-if="historyList" placeholder="选择历史记录" style="width:210px;text-align: center;">
+		        <Option v-for="(item, key) in historyList" :value="key" :key="key">{{ key }}</Option>
+		    </Select>
 			<Button type="info" icon="document-text" @click="showJsonEditor = true">使用JSON编辑</Button>
 		</div>
 		<Form label-position="right" ref="formDynamic" :label-width="120">
@@ -18,7 +21,9 @@
 	            	</Col>
 	            </Row>
 	        </FormItem>
-	        <FormItem label="请求头" v-for="(header, hIndex) in customHeaders" :key="hIndex">
+	        <FormItem 
+	        :label="`请求头-${hIndex + 1}`" 
+	        v-for="(header, hIndex) in customHeaders" :key="hIndex">
 				<Row>
                 	<Col span="8">
 	            		<Input v-model="header.name" placeholder="输入请求头key"></Input>
@@ -42,7 +47,9 @@
 	                </Col>
 	            </Row>
 	        </FormItem>
-	        <FormItem label="cookie信息" v-for="(cookie, cIndex) in customCookies" :key="cIndex">
+	        <FormItem 
+	        :label="`cookie信息-${cIndex + 1}`" 
+	        v-for="(cookie, cIndex) in customCookies" :key="cIndex">
 				<Row>
                 	<Col span="8">
 	            		<Input v-model="cookie.name" placeholder="输入cookie名"></Input>
@@ -116,7 +123,7 @@
 				
 			</FormItem>
 			<FormItem
-				label="编辑动作(action)"
+				:label="`编辑动作(action-${seIndex + 1})`"
 				v-for="(seAction, seIndex) in selectedActions"
 				:key="seIndex"
 				v-if="supportActions.length"
@@ -181,6 +188,8 @@
 					    	</template>
 					    	<template v-else>
 						    	<Input 
+						    	autosize
+						    	:type="arg.inputType || 'text'"
 						    	:placeholder="arg.desc + '(必填参数)'" 
 						    	v-model="seAction.requiredValue[arg.name]"
 						    	></Input>
@@ -190,6 +199,8 @@
 					    <template v-if="seAction.optionals && seAction.optionals.length"  v-for="opt in seAction.optionals">
 					    	<div class="inline optionals" v-for="arg in opt.keys">
 						    	<Input 
+						    	autosize
+						    	:type="arg.inputType || 'text'"
 						    	:placeholder="arg + '(可选参数)'"  
 						    	v-model="seAction.optionalValue[arg]"
 						    	></Input>
@@ -198,11 +209,17 @@
 	                </Col>
 	                <Col :span="4" offset="1">
 	                	<Button type="error" @click="removeItem(seAction, seIndex)">删除</Button>
+	                	<Button type="dashed" @click="addItem(seIndex)">添加</Button>
 	                </Col>
 	            </Row>
 				
 			</FormItem>
-			<FormItem>
+			<FormItem v-if="!selectedActions.length">
+				<Row>
+	                <Col span="18">
+	                	注意：在向输入框添加文字（如type、或者keyboard事件前，请先focus dom元素）
+	                </Col>
+	            </Row>
 	            <Row>
 	                <Col span="18">
 	                    <Button type="dashed" long @click="addItem" icon="plus-round">新增动作(action)</Button>
@@ -293,9 +310,13 @@
 		},
 		data(){
 			return {
+				selectedHistory: null,
+				historyList: null,
 				editor: null,
 				demoConfigs: null,
 				showJsonEditor: false,
+
+
 				customHeaders: [],
 				customDevice: {
 					name: '',
@@ -326,6 +347,17 @@
 				if(val){
 					this.initJsonEditor();
 				}
+			},
+			selectedHistory(val){
+				if(val){
+					var confItem = this.historyList[val];
+					this.customHeaders = confItem.headers;
+					this.name = confItem.name;
+					this.url = confItem.url;
+					this.customCookies = confItem.cookies;
+					this.selectedDevices = confItem.devices;
+					this.selectedActions = confItem.actions;
+					this.waitForClose = confItem.waitForClose;				}
 			}
 		},
 		beforeDestroyed(){
@@ -588,7 +620,16 @@
 					if(result && result.testName){
 						this.$router.push(`/detail/${result.testName}`);
 					}
-					localStorage.setItem(`test-conf-${this.name}-${Date.now()}`, JSON.stringify(res));
+					localStorage.setItem(`test-conf-${this.name}-${Date.now()}`, JSON.stringify({
+						headers: this.customHeaders,
+						name: this.name,
+						url: this.url,
+						cookies: this.customCookies,
+						devices: this.selectedDevices,
+						actions: this.selectedActions,
+						waitForClose: this.waitForClose
+					}));
+					this.initHistory();
 				}catch(e){
 					console.log(e);
 				}
@@ -604,6 +645,29 @@
 						name: item.action
 					};
 					switch(item.action){
+						case 'evaluate':
+							var requiredValue = Object.values(item.requiredValue);
+							if(!requiredValue.length){
+								var eStr = `evaluate动作， 必须提供必要参数！`;
+								this.noticeError(eStr)
+								throw new Error(eStr)
+							}
+							action.actions = [{
+								string: item.requiredValue.string
+							}]
+							break;
+						case 'exposeFunction':
+							var requiredValue = Object.values(item.requiredValue);
+							if(!requiredValue.length){
+								var eStr = `exposeFunction动作， 必须提供必要参数！`;
+								this.noticeError(eStr)
+								throw new Error(eStr)
+							}
+							action.actions = [{
+								name: item.requiredValue.name,
+								value: item.requiredValue.value
+							}]
+							break;
 						case 'keyboard':
 							var requiredValue = Object.values(item.requiredValue);
 							if(!requiredValue.length){
@@ -649,6 +713,17 @@
 							action.actions = [{
 								selector: item.requiredValue.selector
 							}]
+							break;
+						case 'waitFor':
+							if(!item.requiredValue.timeoutOrSelector){
+								var eStr = `page.${item.action}动作， 必须提供必要timeoutOrSelector参数！`;
+								this.noticeError(eStr);
+								throw new Error(eStr);
+							}
+							action.actions = [{
+								timeoutOrSelector: item.requiredValue.timeoutOrSelector,
+								options: item.optionalValue
+							}];
 							break;
 						case 'press':
 							if(!item.requiredValue.key){
@@ -809,8 +884,8 @@
 					sameSite: ''// <string> "Strict" or "Lax".
 				})
 			},
-			addItem(){
-				this.selectedActions.push({
+			addItem(index){
+				var item = {
 					name: '',//类型：page、element
 					selector: '',//选择器，用于选择元素
 					action: '',//动作名
@@ -826,7 +901,11 @@
 					keyboards: [],
 					requireds: [],
 					optionals: []
-				});
+				};
+				if(index != null){
+					return this.selectedActions.splice(index + 1, 0, item)
+				}
+				this.selectedActions.push(item);
 			},
 			async getConfig(){
 				try{
@@ -839,6 +918,19 @@
 				}catch(e){
 					this.noticeError('获取配置失败！');
 				}
+			},
+			async initHistory(){
+
+				for(let conf in localStorage){
+					if(/test-conf/.test(conf)){
+						if(!this.historyList){
+							this.historyList = {};
+						}
+						var confItem = JSON.parse(localStorage[conf]);
+						this.historyList[conf] = confItem;
+					}
+				}
+
 			}
 		},
 		mounted(){
@@ -846,6 +938,7 @@
 			this.getConfig();
 			this.addHeader();
 			this.addCookie();
+			this.initHistory();
 		}
 	}
 </script>

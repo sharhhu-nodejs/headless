@@ -4,6 +4,46 @@ module.exports = [{
 	name: 'page',
 	types: [
 		{
+			name: 'evaluate',
+			desc: '函数evaluate',
+			requireds: [{
+				name: 'string',
+				type: String,
+				inputType: 'textarea',
+				desc: '执行的字符串'
+			}]
+		},
+		{
+			name: 'exposeFunction',
+			desc: '函数注入',
+			requireds: [{
+				name: 'name',
+				type: String,
+				desc: '注入到window对象项的函数名'
+			}, {
+				name: 'value',
+				type: String,
+				desc: '返回值，注意返回值是以promise的形式返回'
+			}]
+		},
+		{
+			name: 'waitFor',
+			desc: '等待事件',
+			requireds: [
+				{
+					name: 'timeoutOrSelector',
+					type: String,
+					desc: '等待操作-超时或选择符'
+				}
+			],
+			optionals: [{
+				name: 'options',
+				type: Object,
+				desc: '选项，用于等待selector，timeout超时时间，visible表示显示',
+				keys: ["visible", "timeout"]
+			}]
+		},
+		{
 			name: 'click',
 			desc: '点击事件',
 			requireds: [{

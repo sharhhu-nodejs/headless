@@ -73,7 +73,7 @@ async function startViewPort(browser, viewports, mjson){
 		if(viewport.console || mjson.console){
 			console.log('console listener');
 			page.on('console', function(args){
-				console.log('console event');
+				// console.log('console event');
 				var str = "";
 				for (let i = 0; i < args.length; ++i){
 					str += `${args[i]} `;
@@ -84,21 +84,21 @@ async function startViewPort(browser, viewports, mjson){
 		if(viewport.frameattached || mjson.frameattached){
 			console.log('frameattached listener');
 			page.on('frameattached', function(args){
-				console.log('frameattached event');
+				// console.log('frameattached event');
 				logger.getLogger('frameattached').trace(...args);
 			})
 		}
 		if(viewport.framedetached || mjson.framedetached){
 			console.log('framedetached listener');
 			page.on('framedetached', function(args){
-				console.log('framedetached event');
+				// console.log('framedetached event');
 				logger.getLogger('framedetached').trace(...args);
 			})
 		}
 		if(viewport.framenavigated || mjson.framenavigated){
 			console.log('framenavigated listener');
 			page.on('framenavigated', function(args){
-				console.log('framenavigated event');
+				// console.log('framenavigated event');
 				logger.getLogger('framenavigated').trace(...args);
 			})
 		}
@@ -106,35 +106,35 @@ async function startViewPort(browser, viewports, mjson){
 		if(viewport.error || mjson.error){
 			console.log('error listener');
 			page.on('error', function(args){
-				console.log('error event');
+				// console.log('error event');
 				logger.getLogger('error').trace(...args);
 			})
 		}
 		if(viewport.request || mjson.request){
 			console.log('request listener');
 			page.on('request', function(request){
-				console.log('request event');
+				// console.log('request event');
 				logger.getLogger('request').trace(`[${request.url}] [${request.resourceType}] [${request.method}] [${JSON.stringify(request.headers)}]`);
 			});
 		}
 		if(viewport.requestfailed || mjson.requestfailed){
 			console.log('requestfailed listener');
 			page.on('requestfailed', function(request){
-				console.log('requestfailed event');
+				// console.log('requestfailed event');
 				logger.getLogger('requestfailed').trace(`[${request.url}] [${request.resourceType}] [${request.method}] [${JSON.stringify(request.headers)}]`);
 			})
 		}
 		if(viewport.requestfinished || mjson.requestfinished){
 			console.log('requestfinished listener');
 			page.on('requestfinished', function(request){
-				console.log('requestfinished event');
+				// console.log('requestfinished event');
 				logger.getLogger('requestfinished').trace(`[${request.url}] [${request.resourceType}] [${request.method}] [${JSON.stringify(request.headers)}]`);
 			})
 		}
 		if(viewport.response || mjson.response){
 			console.log('response listener');
 			page.on('response', async function(response){
-				console.log('response event');
+				// console.log('response event');
 				logger.getLogger('response').trace(`[${response.url}] [${response.status}] [${response.ok}] [${JSON.stringify(response.headers)}]`);
 			})
 		}
@@ -143,7 +143,7 @@ async function startViewPort(browser, viewports, mjson){
 		logger.getLogger('pageInfo').info(`load start ${Date.now()}`);
 		console.log('load listener');
 		page.on('load', async function(){
-			console.log('load event');
+			// console.log('load event');
 			var time = Date.now() - loadStartTime;
 			console.log('time load: ', time);
 			logger.getLogger('pageInfo').info(`load end ${Date.now()}.

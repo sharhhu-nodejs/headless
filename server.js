@@ -203,19 +203,28 @@ router.all('/json', async (ctx)=>{
 	resJson.viewports = viewportSteps;
 	let name = `${mjson.name}-${autoName}-${Date.now()}.json`;
 	resJson.testName = name;
-	fs.writeFile(path.resolve(__dirname, 'public/test-list/', name), JSON.stringify(resJson), function(err){
-		if(!err){
-			fs.appendFile('records/test-list', `${name}\n`, function(err){
-				if(err){
-					console.error(err);
+
+	let res = await (function(){
+		var result = new Promise((resolve, reject) => {
+			fs.writeFile(path.resolve(__dirname, 'public/test-list/', name), JSON.stringify(resJson), function(err){
+				if(!err){
+					fs.appendFile('records/test-list', `${name}\n`, function(err){
+						if(err){
+							return resolve(err);
+							console.error(err);
+						}
+						return resolve();
+					});
 				}
 			});
-		}
-	});
-	console.log(resJson);
-	
-	// ctx.body = wrapperResponse(resJson);
-	ctx.body = wrapperResponse(resJson);
+		});
+		return result;
+	})();
+	if(res){
+		ctx.body = wrapperResponse(res);
+	}else{
+		ctx.body = wrapperResponse(resJson);
+	}
 
 })
 app.use(router.routes());
