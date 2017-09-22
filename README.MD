@@ -4,9 +4,9 @@
 
 本项目是基于`puppeteer`的`headless chrome`自动化测试。
 
-将`puppeteer`的部分[api](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#)封装，基于`koa2`的服务器模式，通过
+将`puppeteer`的部分[api](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#)封装，基于`koa2`的服务器模式，通过`vue`、`iview`、`webpack`构建的后台系统进行配置，生成web页面自动化。
 
-`vue`、`iview`、`webpack`构建的后台系统进行配置，生成web页面自动化。
+目前设置对每个操作都进行了截图，对`puppeteer`提供的`page`事件进行记录并打印日志。每次测试都有独立的日志记录。
 
 > 目录结构
 
