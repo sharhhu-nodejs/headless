@@ -1,4 +1,11 @@
 /node_modules
+/mathjax
 # Ignore everything in this directory
 # Except this file
 !.gitignore
+/public/logs/*.log
+*.log
+/public/screenshots/*.png
+/public/test-list/*.json
+/public/traces/*.json
+/public/uploads/**

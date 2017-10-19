@@ -44,6 +44,7 @@ async function startViewPort(browser, viewports, mjson){
 		console.log(viewport);
 		let viewportStep = {
 			name: viewport.name,
+			viewport: viewport,
 			steps: [],
 			logFile: `logs/${autoName++}-${viewport.name}-${Date.now()}.log`,
 			trace: `traces/trace-${Date.now()}.json`
